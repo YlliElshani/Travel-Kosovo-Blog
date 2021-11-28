@@ -7,6 +7,11 @@ import Gastronomy from "../views/Gastronomy.vue";
 import Tourism from "../views/Tourism.vue";
 import Shopping from "../views/Shopping.vue";
 import AboutUs from "../views/AboutUs.vue";
+import Regsiter from "../views/Register.vue";
+import Login from "../views/Login.vue";
+import ForgotPassword from "../views/ForgotPassword.vue";
+import Profile from "../views/Profile.vue";
+
 
 Vue.use(VueRouter);
 
@@ -40,6 +45,26 @@ const routes = [
     path: "/about-us",
     name: "AboutUs",
     component: AboutUs,
+  },
+  {
+    path: "/Login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/Register",
+    name: "Register",
+    component: Regsiter,
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+  },
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 

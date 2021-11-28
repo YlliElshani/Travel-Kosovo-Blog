@@ -11,6 +11,8 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
   name: "app",
@@ -18,13 +20,36 @@ export default {
     Navigation,
     Footer
   },
-  data() {
-    return {};
+data() {
+    return {
+      navigation:null,
+    };
   },
-  created() {},
+  created() {
+    firebase.auth().onAuthStateChanged((user)=>{
+      this.$store.commit("updateUser",user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser");
+      }
+    })
+    this.checkRoute();
+  },
   mounted() {},
-  methods: {},
-  watch: {},
+  methods: {
+    checkRoute(){
+      if(this.$route.name==="Login" || this.$route.name==="Register" || this.$route.name==="ForgotPassword")
+      {
+        this.navigation=true;
+        return;
+      }
+      this.navigation=false;
+    }
+  },
+  watch: {
+    $route(){
+      this.checkRoute();
+    }
+  },
 };
 </script>
 
@@ -66,5 +91,38 @@ export default {
 
 .link-light {
   color: $primary-light-color;
+}
+
+button,
+.router-button{
+  transition: 500ms ease all;
+  cursor: pointer;
+  margin-top: 24px;
+  padding:12px 24px;
+  background-color: #303030;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  text-transform: uppercase;
+
+  &:focus{
+    outline: none;
+  }
+
+  &:focus{
+    background-color: rgba(48,48,48,0.7);
+  }
+}
+
+.button-light{
+  background-color: transparent;
+  border:2px solid #fff;
+  color: #fff;
+}
+
+.button-inactive{
+  pointer-events: none !important;
+  cursor: none !important;
+  background-color: rgba(128,128,128,0.5) !important;
 }
 </style>
