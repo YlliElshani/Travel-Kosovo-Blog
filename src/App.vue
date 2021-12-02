@@ -1,24 +1,24 @@
 <template>
-  <div class="app-wrapper">
-    <div class="app">
-      <Navigation />
-      <router-view />
-      <Footer />
+    <div id="loadedClass">
+        <div class="logoSet">
+          <Logo/>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
-import Footer from "./components/Footer.vue";
+//import Navigation from "./components/Navigation.vue";
+//import Footer from "./components/Footer.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
+import Logo from "../src/assets/Logo.svg";
 
 export default {
   name: "app",
   components: {
-    Navigation,
-    Footer
+     //Navigation,
+     //Footer,
+     Logo,
   },
 data() {
     return {
@@ -43,6 +43,9 @@ data() {
         return;
       }
       this.navigation=false;
+    },
+    hideAnimation(){
+      window.onload.call(document.getElementById('loadedClass').style.display='none');
     }
   },
   watch: {
@@ -125,4 +128,51 @@ button,
   cursor: none !important;
   background-color: rgba(128,128,128,0.5) !important;
 }
+
+
+// @keyframes hideAnimation{
+//     0% { transform:rotate(0deg); }
+//     99.999% { background-color: #fff }
+//     100% { transform: translateY(0); }
+// }
+
+@keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+      background: #333;
+    }
+    50%{
+      background: #333;
+    }
+    60%{
+      background: #333;
+    }
+    70%{
+      background: #333;
+    }
+    80%{
+      background: #333;
+    }
+    100% {
+      transform: translateY(0);
+      display: hidden;
+    }
+  }
+
+  #loadedClass {  
+    /* This section calls the slideInFromLeft animation we defined above */
+    animation: 2s ease-out 0s 1 slideInFromTop;
+    //animation: 4s ease-out 0s 1 hideAnimation;
+    padding: 30px;
+    background: #333;
+    height: 721px;
+
+     .logoSet{
+      margin-left: 42.5%;
+      margin-right: 42.5%;
+      width: 5%;
+    }
+  }
+
+
 </style>
