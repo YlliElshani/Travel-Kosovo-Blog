@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 // import App from "../App.vue";
 import Home from "../views/Home.vue";
 import Cities from "../views/Cities.vue";
+import City from "../views/City.vue";
 import Gastronomy from "../views/Gastronomy.vue";
 import Tourism from "../views/Tourism.vue";
 import Shopping from "../views/Shopping.vue";
@@ -11,7 +12,6 @@ import Regsiter from "../views/Register.vue";
 import Login from "../views/Login.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Profile from "../views/Profile.vue";
-
 
 Vue.use(VueRouter);
 
@@ -25,6 +25,11 @@ const routes = [
     path: "/cities",
     name: "Cities",
     component: Cities,
+  },
+  {
+    path: "/cities/:id",
+    name: "SingleCity",
+    component: City,
   },
   {
     path: "/gastronomy",
@@ -65,6 +70,14 @@ const routes = [
     path: "/Profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/map",
+    name: "KosovaPath",
+    component: () =>
+      import(
+        /* webpackChunkName: "routes" */ "../components/KosovaMap/MapPath.vue"
+      ),
   },
 ];
 
