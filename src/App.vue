@@ -141,6 +141,20 @@ button,
   color: #fff;
 }
 
+.arrow{
+  margin-left: 8px;
+  width: 12px;
+  path{
+    fill:#000
+  }
+}
+
+.arrow-light{
+  path{
+    fill:#fff
+  }
+}
+
 .button-inactive {
   pointer-events: none !important;
   cursor: none !important;

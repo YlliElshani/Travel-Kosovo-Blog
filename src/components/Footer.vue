@@ -2,9 +2,9 @@
   <div class="footer">
     <hr>
     <ul class="footer-ul">
-      <router-link class="header" :to="{ name: 'Home' }"><Logo /></router-link>
+      <router-link class="logoS" :to="{ name: 'Home' }"><Logo /></router-link>
     </ul>
-    <ul class="footer-ul">
+    <ul class="footer-ul-links">
         <li>Travel Blog <br/> Kosova</li>
         <li>Check out our blogs</li>
         <li>Our Community</li>
@@ -33,7 +33,13 @@
     }
     .footer-ul{
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+        margin-top:50px;
+    }
+    .footer-ul-links{
+        display: flex;
+        justify-content: space-around;
         margin-top:50px;
     }
     .footer ul li a img{
@@ -47,7 +53,68 @@
     list-style-type: none;
     }
     ul li a{
-        text-decoration: none;
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 1000px) {
+    .footer{
+        display: flex;
+        flex-direction: column;
+        padding:50px;
+    }
+    .footer hr{
+        width:85%;
+        align-self: center;
+        margin: 30px;
+    }
+    .footer-ul{
+        display: flex;
+        margin-top:50px;
+    }
+    .footer-ul-links{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top:50px;
+    }
+
+    .footer-ul-links li{
+        padding: 20px;
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        text-align: center;
+    }
+
+    .footer ul li a img{
+        width: 25px;
+        height:25px;
+        margin-top: 10px;
+    }
+    .footer-ul li {
+      display: flex;
+      justify-content: space-around;
+      padding: 25px;
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+
+    .logoS{
+      display: flex;
+      justify-content: space-around;
+      padding: 25px;
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
+    } 
+
+    ul li {
+    list-style-type: none;
+    }
+    ul li a{
+      text-decoration: none;
+    }
     }
 </style>
 
