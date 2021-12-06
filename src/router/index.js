@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import App from "../App.vue";
 import Home from "../views/Home.vue";
 import Cities from "../views/Cities.vue";
 import City from "../views/City.vue";
@@ -76,20 +75,17 @@ const routes = [
     name: "KosovaPath",
     component: () =>
       import(
-        /* webpackChunkName: "routes" */ "../components/KosovaMap/MapPath.vue"
+        /* webpackChunkName: "mapPath" */ "../components/KosovaMap/MapPath.vue"
       ),
   },
 ];
 
 const router = new VueRouter({
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   mode: "history",
   base: process.env.BASE_URL,
   routes,
 });
-
-// new Vue({
-//   router,
-//   render: (h) => h(App),
-// }).$mount("#app");
-
 export default router;

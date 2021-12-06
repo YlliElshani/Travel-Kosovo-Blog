@@ -84,6 +84,12 @@ export default {
   box-sizing: border-box;
   font-family: $primary-font, sans-serif;
 }
+header {
+  border-bottom: 2px solid #1a4531 !important;
+}
+body {
+  background-color: #faf7f1 !important;
+}
 
 .app {
   display: flex;
@@ -141,17 +147,17 @@ button,
   color: #fff;
 }
 
-.arrow{
+.arrow {
   margin-left: 8px;
   width: 12px;
-  path{
-    fill:#000
+  path {
+    fill: #000;
   }
 }
 
-.arrow-light{
-  path{
-    fill:#fff
+.arrow-light {
+  path {
+    fill: #fff;
   }
 }
 

@@ -1,4 +1,4 @@
-# fireblogs
+# KosovaBlogs
 
 ## Project setup
 ```
