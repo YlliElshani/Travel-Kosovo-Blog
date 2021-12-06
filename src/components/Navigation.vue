@@ -11,8 +11,8 @@
           <router-link class="link" :to="{ name: 'Home' }">
             Home
           </router-link>
-          <router-link class="link" :to="{ name: 'Blogs' }">
-            Blogs
+          <router-link class="link" :to="{ name: 'Cities' }">
+            Cities
           </router-link>
           <router-link class="link" to="#">
             Create Post
@@ -68,9 +68,9 @@
         <router-link class="link" :to="{ name: 'Home' }">
           Home
         </router-link>
-        <router-link class="link" :to="{ name: 'Blogs' }">
+        <!-- <router-link class="link" :to="{ name: 'Blogs' }">
           Blogs
-        </router-link>
+        </router-link> -->
         <router-link class="link" to="#">
           Create Post
         </router-link>
@@ -179,7 +179,6 @@ header {
 nav {
   display: flex;
   padding: 25px 0;
-  border-bottom: 2px solid gray;
 
   .branding {
     display: flex;
