@@ -24,7 +24,7 @@
 
         </div>
     </div>
-    <Footer/>
+
 </div>
 </template>
 
@@ -32,7 +32,6 @@
 import email from "../assets/Icons/envelope-regular.svg";
 import Modal from "../components/Modal"
 import Loading from "../components/Loading"
-import Footer from "../components/Footer"
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -52,7 +51,6 @@ export default {
         email,
         Modal,
         Loading,
-        Footer
     },
 
     methods:{

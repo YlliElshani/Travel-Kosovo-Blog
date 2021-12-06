@@ -14,18 +14,49 @@
       <p>
         liquam dignissim lorem ut libero tempus, ut pretium quam bibendum. Cras dignissim orci ut mi interdum bibendum. In finibus laoreet scelerisque. Proin non risus ut nisi aliquet vehicula iaculis at ipsum. In ut interdum ligula. Vivamus ut leo tincidunt, lobortis sem nec, convallis nunc. Quisque facilisis aliquet augue, sit amet laoreet lorem sagittis sed. Nam vitae eros fermentum, 
       </p>
+      <div v-if="!user">
         <router-link class="router-button" to="#">
           Register for KosovaBlogs <Arrow class="arrow arrow-light"/>
         </router-link>
+      </div>
+      <div v-else>
+        <router-link class="router-button" to="#">
+          Make a post <Arrow class="arrow arrow-light"/>
+        </router-link>
+      </div>
      </div>
      <img src="../assets/blogPhotos/stock-1.jpg" alt="">
+     <div class="img2">
+       <img src="../assets/blogPhotos/stock-2.jpg" alt="">
+     </div>
    </div> 
+   <!-- <div class="container2">
+      <div>
+          <img src="../assets/blogPhotos/stock-3.jpg">
+          <h4>
+              Shikoni 
+          </h4>
+      </div>
+      <div>
+          <img src="../assets/blogPhotos/stock-4.jpg">
+          <h4>
+              me 
+          </h4>
+      </div>
+      <div>
+          <img src="../assets/blogPhotos/stock-5.jpg">
+          <h4>
+              shume
+          </h4>
+      </div>
+  </div> -->
   </div>
 </template>
 
 <script>
 import KosovaMap from "../components/KosovaMap/MapPath.vue";
-import Arrow from '../assets/Icons/arrow-right-light.svg'
+import Arrow from '../assets/Icons/arrow-right-light.svg';
+
 
 export default {
   name: "Home",
@@ -33,6 +64,12 @@ export default {
     KosovaMap,
     Arrow,
   },
+
+  computed:{
+    user(){
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 
@@ -51,6 +88,50 @@ export default {
     }
   }
 
+   .container2{
+        margin-top: 10%;
+        height: 600px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        background-color:  #f8f4ed;
+
+        div{
+            height: 540px;
+            padding: 15px;
+            width: 28%;
+            margin-right: 2.3%;
+            margin-left: 2.3%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+
+            img{
+                width: 325px;
+                height: 500px;
+            }
+
+            p{
+                font-family: 'Montserrat', sans-serif;
+                font-size: 22px;
+                text-align: left;
+            }
+
+             .router-button{
+                font-size: 15px;
+                text-decoration: none;
+                width: 50px;
+
+
+                @media(min-width: 800px){
+                margin-left: auto;
+                }
+            }
+        }
+    }
+
   .AboutUs{
     width: 100%;
     margin-top: 5%;
@@ -61,6 +142,19 @@ export default {
     img{
       width: 830px;
       height: 580px;
+    }
+
+    .img2{
+      width: 670px;
+      height: 400px;
+      margin-top: 17%;
+      position: absolute;
+      right: 0;
+      z-index: -1;
+      img{
+        width: 600px;
+        height: 400px;
+      }
     }
 
   .inside{
