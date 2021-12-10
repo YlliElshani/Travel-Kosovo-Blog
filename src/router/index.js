@@ -11,6 +11,7 @@ import Regsiter from "../views/Register.vue";
 import Login from "../views/Login.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Profile from "../views/Profile.vue";
+import CreatePost from "../views/CreatePost.vue";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,11 @@ const routes = [
     path: "/Profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/CreatePost",
+    name: "CreatePost",
+    component: CreatePost,
   },
   {
     path: "/map",

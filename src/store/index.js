@@ -219,28 +219,11 @@ export default new Vuex.Store({
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis fringilla augue, in imperdiet odio finibus ac. Etiam id nibh mi. Aenean posuere turpis nec elit elementum, ac euismod lacus ultricies. Suspendisse suscipit mauris sit amet porttitor bibendum. Fusce id diam a felis venenatis interdum. Donec iaculis finibus commodo. Proin.",
       },
     ],
-    sampleBlogCards: [
-      {
-        blogTitle: "Blog Title #1",
-        blogCoverPhoto: "stack-1",
-        blogDate: "May 1st 2021",
-      },
-      {
-        blogTitle: "Blog Title #2",
-        blogCoverPhoto: "stack-2",
-        blogDate: "May 14th 2021",
-      },
-      {
-        blogTitle: "Blog Title #3",
-        blogCoverPhoto: "stack-3",
-        blogDate: "May 2nd 2021",
-      },
-      {
-        blogTitle: "Blog Title #4",
-        blogCoverPhoto: "stack-4",
-        blogDate: "May 3th 2021",
-      },
-    ],
+    blogHTML:"Write your blog title here...",
+    blogTitle:"",
+    blogPhotoName:"",
+    blogPhotoFileURL:null,
+    blogPhotoPreview:null,
     editPost: null,
     user: null,
     profileEmail: null,
@@ -250,7 +233,29 @@ export default new Vuex.Store({
     profileId: null,
     profileInitials: null,
   },
+
   mutations: {
+
+    newBlogPost(state,payload){
+      state.blogHTML=payload;
+    },
+
+    updateBlogTitle(state,payload){
+      state.blogTitle=payload;
+    },
+
+    fileNameChange(state,payload){
+      state.blogPhotoName=payload;
+    },
+
+    createFileURL(state, payload){
+      state.blogPhotoFileURL=payload;
+    },  
+
+    openPhotoPreview(state){
+      state.blogPhotoPreview= !state.blogPhotoPreview;
+    },
+
     toggleEditPost(state, payload) {
       state.editPost = payload;
       console.log(state.editPost);
