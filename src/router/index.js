@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from "../views/Home.vue";
 import Cities from "../views/Cities.vue";
 import City from "../views/City.vue";
@@ -12,6 +13,10 @@ import Login from "../views/Login.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Profile from "../views/Profile.vue";
 import CreatePost from "../views/CreatePost.vue";
+import CityGastronomy from "../views/City/Gastronomy.vue";
+import CityExperiences from "../views/City/Experiences.vue";
+import CityPlaces from "../views/City/Places.vue";
+
 
 Vue.use(VueRouter);
 
@@ -30,6 +35,21 @@ const routes = [
     path: "/cities/:id",
     name: "SingleCity",
     component: City,
+  },
+  {
+    path: "/cities/:id/Gastronomy",
+    name: "CityGastronomy",
+    component: CityGastronomy,
+  },
+  {
+    path: "/cities/:id/Experiences",
+    name: "CityExperiences",
+    component: CityExperiences,
+  },
+  {
+    path: "/cities/:id/Places",
+    name: "CityPlaces",
+    component: CityPlaces,
   },
   {
     path: "/gastronomy",
@@ -69,6 +89,11 @@ const routes = [
   {
     path: "/Profile",
     name: "Profile",
+    component: Profile,
+  },
+  {
+    path: "/Admin",
+    name: "Admin",
     component: Profile,
   },
   {

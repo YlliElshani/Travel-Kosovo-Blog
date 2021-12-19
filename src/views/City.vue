@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid cityContainer">
+  <div v-if="!isFetching" class="container-fluid cityContainer">
     <div class="cityHero">
       <div class="imgShadow">
         <img
@@ -63,13 +63,24 @@
       <h5>― Italo Calvino, Invisible Cities</h5>
     </div>
     <div class="cityColumns">
-      <div class="col col-lg-4 col-12 cityOptions gastronomy">
+      <div
+        class="col col-lg-4 col-12 cityOptions gastronomy"
+        @click="$router.push({ name: 'CityGastronomy' })"
+      >
         <h1>Gastronomy</h1>
       </div>
-      <div class="col col-lg-4 col-12 cityOptions experiences">
+      <div
+        class="col col-lg-4 col-12 cityOptions experiences"
+        @click="$router.push({ name: 'CityExperiences' })"
+      >
         <h1>Experiences</h1>
       </div>
-      <div class="col col-lg-4 col-12 cityOptions places"><h1>Places</h1></div>
+      <div
+        class="col col-lg-4 col-12 cityOptions places"
+        @click="$router.push({ name: 'CityPlaces' })"
+      >
+        <h1>Places</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -89,13 +100,17 @@ export default {
       currentCity: {},
     };
   },
+  computed: {
+    isFetching() {
+      return this.$store.state.fetchingCities;
+    },
+  },
   created() {
     this.id = this.$route.params.id;
     this.currentCity = this.$store.state.cities.find(
       (city) => city.name == this.id
     );
   },
-  computed: {},
   methods: {
     replaceByDefault(e) {
       e.target.src = this.defaultImg;

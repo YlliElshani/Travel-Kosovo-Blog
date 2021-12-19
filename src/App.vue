@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="slide" mode="out-in">
-      <div v-if="isLoading" id="loadedClass">
+      <div v-if="isLoading || isFetching" id="loadedClass">
         <div class="logoSet">
           <transition name="slide" mode="out-in" appear>
             <Logo />
@@ -9,9 +9,9 @@
         </div>
       </div>
     </transition>
-    <app-navigation v-if="!isLoading"></app-navigation>
-    <router-view v-if="!isLoading"></router-view>
-    <app-footer v-if="!isLoading"></app-footer>
+    <app-navigation v-if="!isLoading && !isFetching"></app-navigation>
+    <router-view v-if="!isLoading && !isFetching"></router-view>
+    <app-footer v-if="!isLoading && !isFetching"></app-footer>
   </div>
 </template>
 
@@ -39,6 +39,9 @@ export default {
     isLoading() {
       return this.loading;
     },
+    isFetching() {
+      return this.$store.state.fetchingCities;
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -47,6 +50,7 @@ export default {
         this.$store.dispatch("getCurrentUser");
       }
     });
+    this.$store.dispatch("setCities");
     this.checkRoute();
     setTimeout(() => {
       this.loading = false;
