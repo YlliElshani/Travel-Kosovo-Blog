@@ -17,106 +17,110 @@ import CityGastronomy from "../views/City/Gastronomy.vue";
 import CityExperiences from "../views/City/Experiences.vue";
 import CityPlaces from "../views/City/Places.vue";
 
-
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/cities",
-    name: "Cities",
-    component: Cities,
-  },
-  {
-    path: "/cities/:id",
-    name: "SingleCity",
-    component: City,
-  },
-  {
-    path: "/cities/:id/Gastronomy",
-    name: "CityGastronomy",
-    component: CityGastronomy,
-  },
-  {
-    path: "/cities/:id/Experiences",
-    name: "CityExperiences",
-    component: CityExperiences,
-  },
-  {
-    path: "/cities/:id/Places",
-    name: "CityPlaces",
-    component: CityPlaces,
-  },
-  {
-    path: "/gastronomy",
-    name: "Gastronomy",
-    component: Gastronomy,
-  },
-  {
-    path: "/tourism",
-    name: "Tourism",
-    component: Tourism,
-  },
-  {
-    path: "/shopping",
-    name: "Shopping",
-    component: Shopping,
-  },
-  {
-    path: "/about-us",
-    name: "AboutUs",
-    component: AboutUs,
-  },
-  {
-    path: "/Login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/Register",
-    name: "Register",
-    component: Regsiter,
-  },
-  {
-    path: "/forgot-password",
-    name: "ForgotPassword",
-    component: ForgotPassword,
-  },
-  {
-    path: "/Profile",
-    name: "Profile",
-    component: Profile,
-  },
-  {
-    path: "/Admin",
-    name: "Admin",
-    component: Profile,
-  },
-  {
-    path: "/CreatePost",
-    name: "CreatePost",
-    component: CreatePost,
-  },
-  {
-    path: "/map",
-    name: "KosovaPath",
-    component: () =>
-      import(
-        /* webpackChunkName: "mapPath" */ "../components/KosovaMap/MapPath.vue"
-      ),
-  },
+	{
+		path: "/",
+		name: "Home",
+		component: Home,
+	},
+	{
+		path: "/cities",
+		name: "Cities",
+		component: Cities,
+	},
+	{
+		path: "/aboutus",
+		name: "AboutUs",
+		component: AboutUs,
+	},
+	{
+		path: "/cities/:id",
+		name: "SingleCity",
+		component: City,
+	},
+	{
+		path: "/cities/:id/Gastronomy",
+		name: "CityGastronomy",
+		component: CityGastronomy,
+	},
+	{
+		path: "/cities/:id/Experiences",
+		name: "CityExperiences",
+		component: CityExperiences,
+	},
+	{
+		path: "/cities/:id/Places",
+		name: "CityPlaces",
+		component: CityPlaces,
+	},
+	{
+		path: "/gastronomy",
+		name: "Gastronomy",
+		component: Gastronomy,
+	},
+	{
+		path: "/tourism",
+		name: "Tourism",
+		component: Tourism,
+	},
+	{
+		path: "/shopping",
+		name: "Shopping",
+		component: Shopping,
+	},
+	{
+		path: "/about-us",
+		name: "AboutUs",
+		component: AboutUs,
+	},
+	{
+		path: "/Login",
+		name: "Login",
+		component: Login,
+	},
+	{
+		path: "/Register",
+		name: "Register",
+		component: Regsiter,
+	},
+	{
+		path: "/forgot-password",
+		name: "ForgotPassword",
+		component: ForgotPassword,
+	},
+	{
+		path: "/Profile",
+		name: "Profile",
+		component: Profile,
+	},
+	{
+		path: "/Admin",
+		name: "Admin",
+		component: Profile,
+	},
+	{
+		path: "/CreatePost",
+		name: "CreatePost",
+		component: CreatePost,
+	},
+	{
+		path: "/map",
+		name: "KosovaPath",
+		component: () =>
+			import(
+				/* webpackChunkName: "mapPath" */ "../components/KosovaMap/MapPath.vue"
+			),
+	},
 ];
 
 const router = new VueRouter({
-  scrollBehavior() {
-    return { x: 0, y: 0 };
-  },
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+	scrollBehavior() {
+		return { x: 0, y: 0 };
+	},
+	mode: "history",
+	base: process.env.BASE_URL,
+	routes,
 });
 export default router;
