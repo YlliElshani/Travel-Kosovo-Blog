@@ -21,9 +21,6 @@
                     <button @click="openPreview" class="preview" :class="{'button-inactive':!this.$store.state.blogPhotoFileURL}">
                         Preview Photo
                     </button>
-                    <span>
-                        File chosen: {{this.$store.state.blogPhotoName}}
-                    </span>
                 </div>
             </div>
             <div class="editor">

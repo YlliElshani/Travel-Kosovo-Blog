@@ -403,4 +403,12 @@ export default {
 #map1:hover {
   cursor: pointer;
 }
+
+#img1{
+      @media (max-width: 800px) {
+          width: 80%;
+          margin-left: 10%;
+          margin-right: 10%;
+      }
+}
 </style>

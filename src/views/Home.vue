@@ -5,7 +5,7 @@
         Zgjedhni qytetin tuaj ne harte dhe shikoni bloget per te!
       </p>
     </div>
-    <kosova-map />
+    <kosova-map/>
     <div class="AboutUs">
       <div class="inside">
         <h2>
@@ -35,26 +35,6 @@
         <img src="../assets/blogPhotos/stock-2.jpg" alt="" />
       </div>
     </div>
-    <!-- <div class="container2">
-      <div>
-          <img src="../assets/blogPhotos/stock-3.jpg">
-          <h4>
-              Shikoni 
-          </h4>
-      </div>
-      <div>
-          <img src="../assets/blogPhotos/stock-4.jpg">
-          <h4>
-              me 
-          </h4>
-      </div>
-      <div>
-          <img src="../assets/blogPhotos/stock-5.jpg">
-          <h4>
-              shume
-          </h4>
-      </div>
-  </div> -->
   </div>
 </template>
 
@@ -78,6 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .instruction {
   width: 100%;
   padding: 15px;
@@ -156,6 +137,12 @@ export default {
       width: 600px;
       height: 400px;
     }
+
+    @media (max-width: 1200px) {
+      img{
+        display: none;
+      }
+    }
   }
 
   .inside {
@@ -182,6 +169,35 @@ export default {
       }
     }
   }
+
+  @media (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        display: none;
+      }
+
+      .img2 {
+        width: 670px;
+        height: 400px;
+        margin-top: 17%;
+        position: absolute;
+        right: 0;
+        z-index: -1;
+        img {
+          width: 600px;
+          height: 400px;
+        }
+
+        @media (max-width: 1200px) {
+          img{
+            display: none;
+          }
+        }
+      }
+  }
+  
 }
 
 @media screen and (max-width: 1000px) {
