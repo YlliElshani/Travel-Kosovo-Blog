@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container {
 	width: 95%;
 	height: 70%;
@@ -86,12 +86,10 @@ export default {
 .description {
 	padding: 50px;
 }
-
 .about-container {
 	display: flex;
 	flex-direction: column;
 }
-
 .about-sections {
 	display: flex;
 	align-items: center;
