@@ -12,7 +12,7 @@
 
 <script>
 import "firebase/auth";
-import db from "../firebase/firebaseInit";
+import db from "../../../firebase/firebaseInit";
 
 export default {
   data() {

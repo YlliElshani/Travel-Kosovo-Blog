@@ -18,7 +18,7 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 import "firebase/auth";
 import Logo from "../src/assets/Logo.svg";
 
@@ -44,13 +44,13 @@ export default {
     },
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.$store.commit("updateUser", user);
-      if (user) {
-        this.$store.dispatch("getCurrentUser");
-      }
-    });
-    this.$store.dispatch("setCities");
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   this.$store.commit("updateUser", user);
+    //   if (user) {
+    //     this.$store.dispatch("getCurrentUser");
+    //   }
+    // });
+    // this.$store.dispatch("setCities");
     this.checkRoute();
     setTimeout(() => {
       this.loading = false;

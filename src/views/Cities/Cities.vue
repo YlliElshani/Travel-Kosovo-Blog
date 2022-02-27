@@ -1,12 +1,14 @@
 <template>
   <div class="container citiesContainer">
     <h1 style="text-align: center">Cities</h1>
-    <div class="cardsWrapper">
+    <div v-if="loadingCities">
+      <loader />
+    </div>
+    <div v-else class="cardsWrapper">
       <b-card
         v-for="city in cities"
         :key="city.name"
         :title="city.name"
-        :img-src="require('../assets/blogPhotos/' + city.imgPath + '.jpg')"
         img-alt="Image"
         img-top
         tag="article"
@@ -24,7 +26,7 @@
           ></b-form-rating>
         </b-card-text>
 
-        <router-link :to="{ name: 'SingleCity', params: { id: city.name } }"
+        <router-link :to="{ name: 'SingleCity', params: { id: city._id } }"
           ><b-button variant="primary"
             >Visit {{ city.name }}</b-button
           ></router-link
@@ -35,22 +37,34 @@
 </template>
 
 <script>
+import loader from "../../components/Loading.vue";
 export default {
   data() {
-    return {
-      cities: [],
-    };
+    return {};
+  },
+  components: {
+    loader,
   },
   created() {
-    this.cities = this.$store.state.cities;
+    this.fetchCities();
+  },
+  computed: {
+    loadingCities() {
+      return this.$store.state.cities.loading;
+    },
+    cities() {
+      return this.$store.state.cities.cities;
+    },
   },
   methods: {
+    fetchCities() {
+      this.$store.dispatch("fetchCities");
+    },
     generateRating() {
       return Math.floor(Math.random() * (5 - 1 + 1)) + 1; //multiply to generate random number between 0, 10
     },
   },
   name: "Cities",
-  components: {},
 };
 </script>
 

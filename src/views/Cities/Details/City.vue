@@ -1,117 +1,130 @@
 <template>
-  <div v-if="!isFetching" class="container-fluid cityContainer">
-    <div class="cityHero">
-      <div class="imgShadow">
-        <img
-          :src="
-            require('../assets/blogPhotos/' +
-              this.currentCity.imgPath.toLowerCase() +
-              '.jpg')
-          "
-          :alt="this.currentCity.id"
-          :onerror="replaceByDefault"
-          class="cityMainImage"
-        />
+  <div>
+    <div v-if="loadingCities">
+      <loader />
+    </div>
+    <div v-else class="container-fluid cityContainer">
+      <div class="cityHero">
+        <div class="imgShadow">
+          <img
+            :src="
+              require('../../../assets/blogPhotos/' +
+                this.currentCity.imgPath.toLowerCase() +
+                '.jpg')
+            "
+            :alt="this.currentCity.id"
+            :onerror="replaceByDefault"
+            class="cityMainImage"
+          />
+        </div>
+        <h1 class="cityName">{{ currentCity.name }}</h1>
       </div>
-      <h1 class="cityName">{{ id }}</h1>
-    </div>
-    <div class="descriptionContainer">
-      <h2>{{ currentCity.description }}</h2>
-    </div>
-    <div class="container-fluid citySubmenu">
-      <h2>Visit {{ id }}</h2>
-    </div>
-    <div class="cityMainContent">
-      <div class="cityTopPlacesContainer">
-        <div class="col col-lg-4 col-12 cityTopPlacesBox">
-          <div class="container boxContainer">
-            <h2>{{ id }}'s top place!</h2>
-            <hr />
-            <h4>
-              Discover a warm and relaxing oasis overlooking the Grand Forest
-              Metsovo garden and surrounding forest.
-            </h4>
-            <p>Location: {{ id }}</p>
-            <button class="btn seeMoreBtn">See More</button>
+      <div class="descriptionContainer">
+        <h2>{{ currentCity.description }}</h2>
+      </div>
+      <div class="container-fluid citySubmenu">
+        <h2>Visit {{ currentCity.name }}</h2>
+      </div>
+      <div class="cityMainContent">
+        <div class="cityTopPlacesContainer">
+          <div class="col col-lg-4 col-12 cityTopPlacesBox">
+            <div class="container boxContainer">
+              <h2>{{ currentCity.name }}'s top place!</h2>
+              <hr />
+              <h4>
+                Discover a warm and relaxing oasis overlooking the Grand Forest
+                Metsovo garden and surrounding forest.
+              </h4>
+              <p>Location: {{ currentCity.name }}</p>
+              <button class="btn seeMoreBtn">See More</button>
+            </div>
+          </div>
+          <div class="col col-lg-4 col-12 cityTopPlacesBox">
+            <div class="container boxContainerImg">
+              <img
+                :src="
+                  require('../../../assets/blogPhotos/' +
+                    this.currentCity.imgPath.toLowerCase() +
+                    '.jpg')
+                "
+                :alt="this.currentCity.id"
+                :onerror="replaceByDefault"
+                class="topPlacesImg"
+              />
+            </div>
           </div>
         </div>
-        <div class="col col-lg-4 col-12 cityTopPlacesBox">
-          <div class="container boxContainerImg">
-            <img
-              :src="
-                require('../assets/blogPhotos/' +
-                  this.currentCity.imgPath.toLowerCase() +
-                  '.jpg')
-              "
-              :alt="this.currentCity.id"
-              :onerror="replaceByDefault"
-              class="topPlacesImg"
-            />
-          </div>
+      </div>
+      <div class="">
+        <TreeLogo />
+      </div>
+      <div class="descriptionContainer">
+        <h2>
+          “Cities, like dreams, are made of desires and fears, even if the
+          thread of their discourse is secret, their rules are absurd, their
+          perspectives deceitful, and everything conceals something else.”
+        </h2>
+        <h5>― Italo Calvino, Invisible Cities</h5>
+      </div>
+      <div class="cityColumns">
+        <div
+          class="col col-lg-4 col-12 cityOptions gastronomy"
+          @click="$router.push({ name: 'CityGastronomy' })"
+        >
+          <h1>Gastronomy</h1>
         </div>
-      </div>
-    </div>
-    <div class="">
-      <TreeLogo />
-    </div>
-    <div class="descriptionContainer">
-      <h2>
-        “Cities, like dreams, are made of desires and fears, even if the thread
-        of their discourse is secret, their rules are absurd, their perspectives
-        deceitful, and everything conceals something else.”
-      </h2>
-      <h5>― Italo Calvino, Invisible Cities</h5>
-    </div>
-    <div class="cityColumns">
-      <div
-        class="col col-lg-4 col-12 cityOptions gastronomy"
-        @click="$router.push({ name: 'CityGastronomy' })"
-      >
-        <h1>Gastronomy</h1>
-      </div>
-      <div
-        class="col col-lg-4 col-12 cityOptions experiences"
-        @click="$router.push({ name: 'CityExperiences' })"
-      >
-        <h1>Experiences</h1>
-      </div>
-      <div
-        class="col col-lg-4 col-12 cityOptions places"
-        @click="$router.push({ name: 'CityPlaces' })"
-      >
-        <h1>Places</h1>
+        <div
+          class="col col-lg-4 col-12 cityOptions experiences"
+          @click="$router.push({ name: 'CityExperiences' })"
+        >
+          <h1>Experiences</h1>
+        </div>
+        <div
+          class="col col-lg-4 col-12 cityOptions places"
+          @click="$router.push({ name: 'CityPlaces' })"
+        >
+          <h1>Places</h1>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import TreeLogo from "../assets/Icons/tree.svg";
+import TreeLogo from "../../../assets/Icons/tree.svg";
+import loader from "../../../components/Loading.vue";
 
 export default {
   name: "Cities",
   components: {
     TreeLogo,
+    loader,
   },
   data() {
     return {
       imgError: false,
       id: null,
-      currentCity: {},
     };
   },
   computed: {
-    isFetching() {
-      return this.$store.state.fetchingCities;
+    loadingCities() {
+      return this.$store.state.cities.loading;
+    },
+    cities() {
+      return this.$store.state.cities.cities;
+    },
+    currentCity() {
+      return this.$store.state.cities.city;
     },
   },
   created() {
     this.id = this.$route.params.id;
-    this.currentCity = this.$store.state.cities.find(
-      (city) => city.name == this.id
-    );
+    this.getCurrentCity(this.id);
   },
   methods: {
+    getCurrentCity(cityId) {
+      this.$store.dispatch("getCity", cityId);
+    },
     replaceByDefault(e) {
       e.target.src = this.defaultImg;
     },
@@ -121,7 +134,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import "../assets/sass/_variables.scss";
+@import "../../../assets/sass/_variables.scss";
 
 * {
   font-family: $secondary-font, serif;
@@ -262,13 +275,13 @@ export default {
       background-color: #fff;
     }
     .gastronomy {
-      background-image: url("../assets/blogPhotos/gastronomy.jpg");
+      background-image: url("../../../assets/blogPhotos/gastronomy.jpg");
     }
     .experiences {
-      background-image: url("../assets/blogPhotos/experiences.jpg");
+      background-image: url("../../../assets/blogPhotos/experiences.jpg");
     }
     .places {
-      background-image: url("../assets/blogPhotos/places.jpg");
+      background-image: url("../../../assets/blogPhotos/places.jpg");
     }
     .gastronomy,
     .experiences,

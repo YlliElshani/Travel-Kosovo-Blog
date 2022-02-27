@@ -3,7 +3,7 @@
     <div class="cityHero">
       <div class="imgShadow">
         <img
-          :src="require('../../assets/blogPhotos/experiencesFull.jpg')"
+          :src="require('../../../assets/blogPhotos/experiencesFull.jpg')"
           :alt="this.currentCity.id"
           :onerror="replaceByDefault"
           class="cityMainImage"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import TreeLogo from "../../assets/Icons/tree.svg";
+import TreeLogo from "../../../assets/Icons/tree.svg";
 
 export default {
   name: "CityExperiences",
@@ -96,7 +96,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import "../../assets/sass/_variables.scss";
+@import "../../../assets/sass/_variables.scss";
 
 * {
   font-family: $secondary-font, serif;
@@ -238,22 +238,22 @@ export default {
       border: 0.5rem solid #fff;
     }
     .mosques {
-      background-image: url("../../assets/blogPhotos/mosques.jpg");
+      background-image: url("../../../assets/blogPhotos/mosques.jpg");
     }
     .hiking {
-      background-image: url("../../assets/blogPhotos/hiking.jpg");
+      background-image: url("../../../assets/blogPhotos/hiking.jpg");
     }
     .museums {
-      background-image: url("../../assets/blogPhotos/museums.jpg");
+      background-image: url("../../../assets/blogPhotos/museums.jpg");
     }
     .nature {
-      background-image: url("../../assets/blogPhotos/nature.jpg");
+      background-image: url("../../../assets/blogPhotos/nature.jpg");
     }
     .artifacts {
-      background-image: url("../../assets/blogPhotos/stock-5.jpg");
+      background-image: url("../../../assets/blogPhotos/stock-5.jpg");
     }
     .lakes {
-      background-image: url("../../assets/blogPhotos/stock-3.jpg");
+      background-image: url("../../../assets/blogPhotos/stock-3.jpg");
     }
     .mosques,
     .hiking,

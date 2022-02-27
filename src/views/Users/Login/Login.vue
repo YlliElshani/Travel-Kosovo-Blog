@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import email from "../assets/Icons/envelope-regular.svg";
-import password from "../assets/Icons/lock-alt-solid.svg";
+import email from "../../../assets/Icons/envelope-regular.svg";
+import password from "../../../assets/Icons/lock-alt-solid.svg";
 import firebase from "firebase/app";
 import "firebase/auth";
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex justify-content-center shopping">
-    <h1>Shopping</h1>    
+    <h1>Shopping</h1>
   </div>
 </template>
 
@@ -11,6 +11,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
