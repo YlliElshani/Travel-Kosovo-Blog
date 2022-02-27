@@ -3,7 +3,7 @@
     <div class="cityHero">
       <div class="imgShadow">
         <img
-          :src="require('../../assets/blogPhotos/placesFull.jpg')"
+          :src="require('../../../assets/blogPhotos/placesFull.jpg')"
           :alt="this.currentCity.id"
           :onerror="replaceByDefault"
           class="cityMainImage"
@@ -37,7 +37,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/pool.jpg')"
+              :src="require('../../../assets/blogPhotos/pool.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -55,7 +55,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/gym.jpg')"
+              :src="require('../../../assets/blogPhotos/gym.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -101,7 +101,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/conferenceRoom.jpg')"
+              :src="require('../../../assets/blogPhotos/conferenceRoom.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -119,7 +119,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/giftShop.jpg')"
+              :src="require('../../../assets/blogPhotos/giftShop.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import TreeLogo from "../../assets/Icons/tree.svg";
+import TreeLogo from "../../../assets/Icons/tree.svg";
 
 export default {
   name: "CityPlaces",
@@ -188,7 +188,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import "../../assets/sass/_variables.scss";
+@import "../../../assets/sass/_variables.scss";
 
 * {
   font-family: $secondary-font, serif;
@@ -335,13 +335,13 @@ export default {
       background-color: #fff;
     }
     .gastronomy {
-      background-image: url("../../assets/blogPhotos/gastronomy.jpg");
+      background-image: url("../../../assets/blogPhotos/gastronomy.jpg");
     }
     .experiences {
-      background-image: url("../../assets/blogPhotos/experiences.jpg");
+      background-image: url("../../../assets/blogPhotos/experiences.jpg");
     }
     .places {
-      background-image: url("../../assets/blogPhotos/places.jpg");
+      background-image: url("../../../assets/blogPhotos/places.jpg");
     }
     .gastronomy,
     .experiences,

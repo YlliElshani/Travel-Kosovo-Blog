@@ -5,7 +5,7 @@
         Zgjedhni qytetin tuaj ne harte dhe shikoni bloget per te!
       </p>
     </div>
-    <kosova-map/>
+    <kosova-map />
     <div class="AboutUs">
       <div class="inside">
         <h2>
@@ -30,17 +30,17 @@
           </router-link>
         </div>
       </div>
-      <img src="../assets/blogPhotos/stock-1.jpg" alt="" />
+      <img src="../../assets/blogPhotos/stock-1.jpg" alt="" />
       <div class="img2">
-        <img src="../assets/blogPhotos/stock-2.jpg" alt="" />
+        <img src="../../assets/blogPhotos/stock-2.jpg" alt="" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import KosovaMap from "../components/KosovaMap/MapPath.vue";
-import Arrow from "../assets/Icons/arrow-right-light.svg";
+import KosovaMap from "../../components/KosovaMap/MapPath.vue";
+import Arrow from "../../assets/Icons/arrow-right-light.svg";
 
 export default {
   name: "Home",
@@ -58,7 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .instruction {
   width: 100%;
   padding: 15px;
@@ -139,7 +138,7 @@ export default {
     }
 
     @media (max-width: 1200px) {
-      img{
+      img {
         display: none;
       }
     }
@@ -171,33 +170,32 @@ export default {
   }
 
   @media (max-width: 1000px) {
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
+    img {
+      display: none;
+    }
+
+    .img2 {
+      width: 670px;
+      height: 400px;
+      margin-top: 17%;
+      position: absolute;
+      right: 0;
+      z-index: -1;
       img {
-        display: none;
-      }
-
-      .img2 {
-        width: 670px;
+        width: 600px;
         height: 400px;
-        margin-top: 17%;
-        position: absolute;
-        right: 0;
-        z-index: -1;
-        img {
-          width: 600px;
-          height: 400px;
-        }
+      }
 
-        @media (max-width: 1200px) {
-          img{
-            display: none;
-          }
+      @media (max-width: 1200px) {
+        img {
+          display: none;
         }
       }
+    }
   }
-  
 }
 
 @media screen and (max-width: 1000px) {

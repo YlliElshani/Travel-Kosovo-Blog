@@ -3,7 +3,7 @@
     <div class="cityHero">
       <div class="imgShadow">
         <img
-          :src="require('../../assets/blogPhotos/gastronomyFull.jpg')"
+          :src="require('../../../assets/blogPhotos/gastronomyFull.jpg')"
           :alt="this.currentCity.id"
           :onerror="replaceByDefault"
           class="cityMainImage"
@@ -39,7 +39,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/gastronomy1.jpg')"
+              :src="require('../../../assets/blogPhotos/gastronomy1.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -50,7 +50,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/gastronomy2.jpg')"
+              :src="require('../../../assets/blogPhotos/gastronomy2.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -86,7 +86,7 @@
         <div class="col col-lg-5 col-12 cityTopPlacesBox">
           <div class="container boxContainerImg">
             <img
-              :src="require('../../assets/blogPhotos/gastronomy3.jpg')"
+              :src="require('../../../assets/blogPhotos/gastronomy3.jpg')"
               :alt="this.currentCity.id"
               :onerror="replaceByDefault"
               class="topPlacesImg"
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import TreeLogo from "../../assets/Icons/tree.svg";
+import TreeLogo from "../../../assets/Icons/tree.svg";
 
 export default {
   name: "CityGastronomy",
@@ -141,7 +141,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-@import "../../assets/sass/_variables.scss";
+@import "../../../assets/sass/_variables.scss";
 
 * {
   font-family: $secondary-font, serif;
@@ -282,13 +282,13 @@ export default {
       background-color: #fff;
     }
     .gastronomy {
-      background-image: url("../../assets/blogPhotos/gastronomy.jpg");
+      background-image: url("../../../assets/blogPhotos/gastronomy.jpg");
     }
     .experiences {
-      background-image: url("../../assets/blogPhotos/experiences.jpg");
+      background-image: url("../../../assets/blogPhotos/experiences.jpg");
     }
     .places {
-      background-image: url("../../assets/blogPhotos/places.jpg");
+      background-image: url("../../../assets/blogPhotos/places.jpg");
     }
     .gastronomy,
     .experiences,
