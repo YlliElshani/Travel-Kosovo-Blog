@@ -1,14 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
 // import checkIfAuthenticated from "./api/middlewares/checkIfAuthenticated";
-import getAuthToken from "./api/middlewares/getAuthToken";
+// import getAuthToken from "./api/middlewares/getAuthToken";
 // import usersRouter from "./api/routes/usersRoute";
 import CityRoute from "./api/routes/CityRoute";
 import cors from "cors";
 import helmet from "helmet";
 
-mongoose.connect("mongodb://localhost:27017/Travel_Test").then(() => {
-	console.log("Connected to mongodb port 27017");
+const connectionSting = 'mongodb://localhost:27017/db_Travel-Blog'
+
+mongoose.connect(connectionSting).then(() => {
+	console.log("Connected to mongodb on: " + connectionSting);
 	const port = process.env.PORT || 1000;
 
 	const app = express();
@@ -25,13 +27,13 @@ mongoose.connect("mongodb://localhost:27017/Travel_Test").then(() => {
 
 	app.use(express.json());
 
-	app.use(getAuthToken);
+	// app.use(getAuthToken);
 
 	// app.use("/register", usersRouter);
 
-	app.use("/city", CityRoute);
+	app.use("/cities", CityRoute);
 
 	app.listen(port, () => {
-		console.log(`Real estate api running on port ${port}`);
+		console.log(`Travel blog API running on port ${port}`);
 	});
 });

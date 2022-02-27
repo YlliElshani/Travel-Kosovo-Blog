@@ -5,12 +5,13 @@ export default {
 	list: async (req, res) => {
 		const list = await CityModel.find();
 
+		console.log('testing list method')
 		return res.json(list);
 	},
 	get: async (req, res) => {
-		const { id } = req.query;
+		const id = req.params.id;
 
-		const foundItem = await CityModel.find({ _id: id });
+		const foundItem = await CityModel.findOne({ _id: id });
 
 		return res.json(foundItem);
 	},

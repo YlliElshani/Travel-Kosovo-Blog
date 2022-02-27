@@ -3,12 +3,12 @@ import CityController from "../controllers/CityController";
 
 const CityRoute = express.Router();
 
-CityRoute.get("/list", CityController.list);
+CityRoute.get("/", CityController.list);
 
-CityRoute.get("/get", CityController.get);
+CityRoute.get("/:id", CityController.get);
 
 CityRoute.post("/create", CityController.post);
 
-CityRoute.put("/update", CityController.put);
+CityRoute.put("/update/:id", CityController.put);
 
 export default CityRoute;
