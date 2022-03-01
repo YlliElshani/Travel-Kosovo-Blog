@@ -7,7 +7,7 @@ import CityRoute from "./api/routes/CityRoute";
 import cors from "cors";
 import helmet from "helmet";
 
-const connectionSting = 'mongodb://localhost:27017/db_Travel-Blog'
+const connectionSting = "mongodb://localhost:27017/Travel_Test";
 
 mongoose.connect(connectionSting).then(() => {
 	console.log("Connected to mongodb on: " + connectionSting);
