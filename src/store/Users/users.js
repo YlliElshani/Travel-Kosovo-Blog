@@ -1,17 +1,21 @@
 import api from "@/libs/api";
+import firebase from "firebase/app";
+import "firebase/auth";
+import db from "../../firebase/firebaseInit";
 
 export default {
   state: {
     loading: true,
     loggedIn: false,
     isAdmin: false,
-    user: {},
-    profileEmail: null,
-    profileFirstName: null,
-    profileLastName: null,
-    profileUserName: null,
-    profileId: null,
-    profileInitials: null,
+    currentUser: {
+      profileId: null,
+      profileEmail: null,
+      profileFirstName: null,
+      profileLastName: null,
+      profileUserName: null,
+      profileInitials: null,
+    },
   },
   mutations: {
     SET_LOADING(state, value) {
@@ -20,15 +24,12 @@ export default {
     SET_LOGGED_IN(state, value) {
       state.loggedIn = value;
     },
-    SET_USER(state, userData) {
-      state.user = userData;
-    },
     SET_PROFILE_INFO(state, doc) {
-      state.profileId = doc.id;
-      state.profileEmail = doc.data().email;
-      state.profileFirstName = doc.data().firstName;
-      state.profileLastName = doc.data().lastName;
-      state.profileUsername = doc.data().username;
+      state.currentUser.profileId = doc.id;
+      state.currentUser.profileEmail = doc.data().email;
+      state.currentUser.profileFirstName = doc.data().firstName;
+      state.currentUser.profileLastName = doc.data().lastName;
+      state.currentUser.profileUserName = doc.data().username;
     },
     UPDATE_USER(state, payload) {
       state.user = payload;
@@ -44,6 +45,9 @@ export default {
     SET_LAST_NAME(state, payload) {
       state.profileLastName = payload;
     },
+    SIGN_USER_OUT(state) {
+      state.currentUser.profileId = null;
+    },
   },
   actions: {
     fetchUser({ commit }, user) {
@@ -52,7 +56,6 @@ export default {
     },
     createUser({ commit }, value) {
       commit("SET_LOADING", true);
-
       commit("SET_USER", value ? value : null);
       return new Promise((resolve, reject) => {
         api("localhost")
@@ -68,6 +71,14 @@ export default {
           });
       });
     },
+    loginUser({ commit, dispatch }, user) {
+      commit("SET_LOADING", true);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(user.email, user.password)
+        .then(() => dispatch("getCurrentUser"));
+      commit("SET_LOADING", false);
+    },
     // 	async updateUserSettings({ commit, state }) {
     // 		const dataBase = await db.collection("users").doc(state.profileId);
     // 		await dataBase.update({
@@ -77,13 +88,31 @@ export default {
     // 		});
     // 		commit("setProfileInitials");
     // 	},
-    // 	async getCurrentUser({ commit }) {
-    // 		const dataBase = await db
-    // 			.collection("users")
-    // 			.doc(firebase.auth().currentUser.uid);
-    // 		const dbResults = await dataBase.get();
-    // 		commit("setProfileInfo", dbResults);
-    // 		commit("setProfileInitials");
-    // 	},
+    async getCurrentUser({ commit }) {
+      commit("SET_LOADING", true);
+      const dataBase = await db
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid);
+      const dbResults = await dataBase.get();
+      commit("SET_PROFILE_INFO", dbResults);
+      commit("SET_LOADING", false);
+      // commit("setProfileInitials");
+      // const token = await user.getIdTokenResult();
+      // const admin = await token.claims.admin;
+      // commit("setProfileAdmin", admin);
+    },
+    signUserOut({ commit }) {
+      commit("SET_LOADING", true);
+      commit("SIGN_USER_OUT");
+      commit("SET_LOADING", false);
+    },
+    // setProfileInfo(state, doc) {
+    //   state.currentUser.profileId = doc.id;
+    //   state.currentUser.profileEmail = doc.data().email;
+    //   state.currentUser.profileFirstName = doc.data().firstName;
+    //   state.currentUser.profileLastName = doc.data().lastName;
+    //   state.currentUser.profileUserName = doc.data().username;
+    //   console.log(state.currentUser);
+    // },
   },
 };
