@@ -1,61 +1,21 @@
 <template>
   <div class="create-post">
-    <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
-    <div class="container">
-      <div :class="{ invisible: !error }" class="err-message">
-        <p>
-          <span>
-            Error:
-          </span>
-          {{ this.errorMsg }}
-        </p>
-      </div>
-      <div class="blog-info">
-        <input type="text" placeholder="Enter blog title" v-model="blogTitle" />
-        <div class="upload-file">
-          <label for="blog-photo">
-            Upload cover photo
-          </label>
-          <input
-            type="file"
-            ref="blogPhoto"
-            id="blog-photo"
-            @change="fileChange"
-            accept=".png, .jpg, .jpeg"
-          />
-          <!-- Class binding in this button means a user can only preview a photo if it exists -->
-          <button
-            @click="openPreview"
-            class="preview"
-            :class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }"
-          >
-            Preview Photo
-          </button>
-        </div>
-      </div>
-      <div class="editor">
-        <vue-editor
-          :editorOptions="editorSettings"
-          v-model="blogHTML"
-          useCustomImageHamdler
-        />
-      </div>
-      <div class="blog-actions">
-        <button>
-          Publish Blog
-        </button>
-        <router-link class="router-button" to="#">Post Preview</router-link>
-      </div>
-    </div>
+    <input type="text" placeholder="Title" v-model="blogTitle" >
+    <input type="text" placeholder="Image Path" v-model="imgPath">
+    <input type="text" placeholder="Description" v-model="blogHTML">
+    <button @click="addPost">
+			Add
+		</button>
   </div>
 </template>
 
 <script>
-import BlogCoverPreview from "../../../components/BlogCoverPreview.vue";
 import Quill from "quill";
 window.Quill = Quill;
 const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
+import createPost from "../../../utility/Posts/createPost";
+
 
 export default {
   name: "CreatePost",
@@ -69,11 +29,15 @@ export default {
           imageResize: {},
         },
       },
+			city: {
+				blogTitle: "",
+				imgPath: "",
+				blogHTML: ""
+			},
     };
   },
 
   components: {
-    BlogCoverPreview,
   },
 
   methods: {
@@ -83,6 +47,20 @@ export default {
       this.$store.commit("fileNameChange", fileName);
       this.$store.commit("createFileURL", URL.createObjectURL(this.file));
     },
+
+   async addPost() {
+     try {
+       const newPost = await createPost({
+				blogTitle: this.blogTitle,
+				imgPath: this.imgPath,
+				blogHTML: this.blogHTML,
+			});
+			this.$router.push({ name: "Posts", params: { id: newPost._id } });
+     } catch (error) {
+       alert(error)
+     }
+	
+		},
 
     openPreview() {
       this.$store.commit("openPhotoPreview");

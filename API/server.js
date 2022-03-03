@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import CityRoute from "./api/routes/CityRoute";
 import cors from "cors";
 import helmet from "helmet";
+import PostRoute from "./api/routes/postRoute";
 
 const connectionSting = "mongodb://localhost:27017/Travel_Test";
 
@@ -32,6 +33,8 @@ mongoose.connect(connectionSting).then(() => {
 	// app.use("/register", usersRouter);
 
 	app.use("/cities", CityRoute);
+
+	app.use("/posts", PostRoute);
 
 	app.listen(port, () => {
 		console.log(`Travel blog API running on port ${port}`);

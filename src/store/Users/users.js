@@ -1,4 +1,7 @@
 import api from "@/libs/api";
+import firebase from "firebase/app";
+import "firebase/auth";
+import db from "../../firebase/firebaseInit";
 
 export default {
   state: {
@@ -68,22 +71,22 @@ export default {
           });
       });
     },
-    // 	async updateUserSettings({ commit, state }) {
-    // 		const dataBase = await db.collection("users").doc(state.profileId);
-    // 		await dataBase.update({
-    // 			firstName: state.profileFirstName,
-    // 			lastName: state.profileLastName,
-    // 			username: state.profileUserName,
-    // 		});
-    // 		commit("setProfileInitials");
-    // 	},
-    // 	async getCurrentUser({ commit }) {
-    // 		const dataBase = await db
-    // 			.collection("users")
-    // 			.doc(firebase.auth().currentUser.uid);
-    // 		const dbResults = await dataBase.get();
-    // 		commit("setProfileInfo", dbResults);
-    // 		commit("setProfileInitials");
-    // 	},
+    	async updateUserSettings({ commit, state }) {
+    		const dataBase = await db.collection("users").doc(state.profileId);
+    		await dataBase.update({
+    			firstName: state.profileFirstName,
+    			lastName: state.profileLastName,
+    			username: state.profileUserName,
+    		});
+    		commit("setProfileInitials");
+    	},
+      async getCurrentUser({ commit }) {
+        const dataBase = await db
+          .collection("users")
+          .doc(firebase.auth().currentUser.uid);
+        const dbResults = await dataBase.get();
+        commit("setProfileInfo", dbResults);
+        commit("setProfileInitials");
+    	},
   },
 };
