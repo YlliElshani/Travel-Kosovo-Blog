@@ -27,7 +27,7 @@ export default [
 	},
 	//City Details
 	{
-		path: "/cities/:id",
+		path: "/cities/:name",
 		name: "SingleCity",
 		component: () => import("../../views/Cities/Details/City.vue"),
 	},

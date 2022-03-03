@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loadingCities">
+    <div v-if="loadingCities || loading">
       <loader />
     </div>
     <div v-else class="container-fluid cityContainer">
@@ -103,12 +103,15 @@ export default {
   data() {
     return {
       imgError: false,
-      id: null,
+      name: null,
     };
   },
   computed: {
     loadingCities() {
       return this.$store.state.cities.loading;
+    },
+    loading() {
+      return this.$store.state.cities.fetchingCity;
     },
     cities() {
       return this.$store.state.cities.cities;
@@ -118,12 +121,12 @@ export default {
     },
   },
   created() {
-    this.id = this.$route.params.id;
-    this.getCurrentCity(this.id);
+    this.name = this.$route.params.name;
+    this.getCurrentCity(this.name);
   },
   methods: {
-    getCurrentCity(cityId) {
-      this.$store.dispatch("getCity", cityId);
+    getCurrentCity(cityName) {
+      this.$store.dispatch("getCity", cityName);
     },
     replaceByDefault(e) {
       e.target.src = this.defaultImg;

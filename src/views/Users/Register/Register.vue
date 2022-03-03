@@ -69,6 +69,7 @@ export default {
       username: "",
       email: "",
       password: "",
+      roles: null,
       error: null,
       errorMsg: "",
     };
