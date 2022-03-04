@@ -1,12 +1,12 @@
-export default[
-    {
-    path: "/blog",
-    name: "Blog",
-    component: () => import('../../views/Posts/Blogs.vue'),
-    },
-    {
-    path: "/CreatePost",
-    name: "CreatePost",
-    component: () => import('../../views/Posts/Create/CreatePost.vue'),
-    },
-]
+export default [
+	{
+		path: "/Posts",
+		name: "Posts",
+		component: () => import("../../views/Posts/Posts.vue"),
+	},
+	{
+		path: "/posts/create",
+		name: "CreatePost",
+		component: () => import("../../views/Posts/Create/CreatePost.vue"),
+	},
+];

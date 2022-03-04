@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const createCity = async (CityBody) => {
-	const data = await axios
-		.post(`http://localhost:1000/cities/create/`, CityBody)
+const deleteCity = async (id) => {
+	const data = await await axios
+		.delete(`http://localhost:1000/cities/delete/${id}`)
 		.then((response) => {
 			console.log(response);
 		})
@@ -13,4 +13,4 @@ const createCity = async (CityBody) => {
 	return data;
 };
 
-export default createCity;
+export default deleteCity;

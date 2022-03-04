@@ -20,7 +20,7 @@ export default {
 		},
 	},
 	actions: {
-		fetcgPosts({ commit }) {
+		fetchPosts({ commit }) {
 			commit("SET_LOADING", true);
 			return new Promise((resolve, reject) => {
 				api("localhost")

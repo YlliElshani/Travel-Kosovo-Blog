@@ -28,48 +28,52 @@ export default {
 	},
 	methods: {
 		async addCity() {
-			const newCity = await createCity({
-				/*...this.city */
-				name: this.name,
-				imgPath: this.imgPath,
-				description: this.description,
-				rating: this.rating,
-			});
-			this.$router.push({ name: "Cities", params: { id: newCity._id } });
+			try {
+				await createCity({
+					/*...this.city */
+					name: this.name,
+					imgPath: this.imgPath,
+					description: this.description,
+					rating: this.rating,
+				});
+				return this.$router.push({
+					name: "Cities" /*, params: { id: newCity.id }*/,
+				});
+			} catch (err) {
+				console.log(`Errori ${err}`);
+			}
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
+.addCity {
+	margin-left: 20%;
+	margin-right: 20%;
+	height: auto;
+	width: 60%;
+	padding: 20px;
+	margin-top: 3%;
+	margin-bottom: 3%;
+	display: flex;
+	flex-direction: column;
 
-	.addCity{
-		margin-left: 20%;
-		margin-right: 20%;
-		height: auto;
-		width: 60%;
-		padding: 20px;
-		margin-top: 3%;
-		margin-bottom: 3%;
-		display: flex;
-		flex-direction: column;
-
-			input{
-				width:40%;
-				margin-right: 30%;
-				margin-left: 30%;
-				padding: 15px;
-				margin-top: 2%;
-				margin-bottom: 2%;
-			}
-
-			button{
-				margin-right: 30%;
-				margin-left: 30%;
-				padding: 15px;
-				margin-top: 2%;
-				margin-bottom: 2%;
-			}
+	input {
+		width: 40%;
+		margin-right: 30%;
+		margin-left: 30%;
+		padding: 15px;
+		margin-top: 2%;
+		margin-bottom: 2%;
 	}
 
+	button {
+		margin-right: 30%;
+		margin-left: 30%;
+		padding: 15px;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+}
 </style>

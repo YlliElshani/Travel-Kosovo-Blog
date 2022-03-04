@@ -5,7 +5,7 @@ export default {
 	list: async (req, res) => {
 		const list = await PostModel.find();
 
-		console.log('testing list method')
+		// console.log('testing list method')
 		return res.json(list);
 	},
 	get: async (req, res) => {

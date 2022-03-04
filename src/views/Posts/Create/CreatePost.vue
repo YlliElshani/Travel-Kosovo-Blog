@@ -1,12 +1,67 @@
-<template>
-  <div class="create-post">
-    <input type="text" placeholder="Title" v-model="blogTitle" >
-    <input type="text" placeholder="Image Path" v-model="imgPath">
-    <input type="text" placeholder="Description" v-model="blogHTML">
-    <button @click="addPost">
+<!--<template>
+	<div class="create-post">
+		<input type="text" placeholder="Title" v-model="post.blogTitle" />
+		<input type="text" placeholder="Image Path" v-model="post.imgPath" />
+		<input type="text" placeholder="Description" v-model="post.blogHTML" />
+		<button @click="addPost">
 			Add
 		</button>
-  </div>
+	</div>
+</template>-->
+<template>
+	<div class="create-post">
+		<BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
+		<div class="container">
+			<div :class="{ invisible: !error }" class="err-message">
+				<p>
+					<span>
+						Error:
+					</span>
+					{{ this.errorMsg }}
+				</p>
+			</div>
+			<div class="blog-info">
+				<input
+					type="text"
+					placeholder="Enter blog title"
+					v-model="post.blogTitle"
+				/>
+				<div class="upload-file">
+					<label for="blog-photo">
+						Upload cover photo
+					</label>
+					<input
+						type="file"
+						ref="blogPhoto"
+						id="blog-photo"
+						@change="fileChange"
+						accept=".png, .jpg, .jpeg"
+					/>
+					<!-- Class binding in this button means a user can only preview a photo if it exists -->
+					<button
+						@click="openPreview"
+						class="preview"
+						:class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }"
+					>
+						Preview Photo
+					</button>
+				</div>
+			</div>
+			<div class="editor">
+				<vue-editor
+					:editorOptions="editorSettings"
+					v-model="post.blogHTML"
+					useCustomImageHamdler
+				/>
+			</div>
+			<div class="blog-actions">
+				<button @click="addPost">
+					Publish Blog
+				</button>
+				<!-- <router-link class="router-button" to="#">Post Preview</router-link> -->
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -16,222 +71,217 @@ const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
 import createPost from "../../../utility/Posts/createPost";
 
-
 export default {
-  name: "CreatePost",
-  data() {
-    return {
-      file: null,
-      error: null,
-      errorMsg: null,
-      editorSettings: {
-        modules: {
-          imageResize: {},
-        },
-      },
-			city: {
+	name: "CreatePost",
+	data() {
+		return {
+			file: null,
+			error: null,
+			errorMsg: null,
+			editorSettings: {
+				modules: {
+					imageResize: {},
+				},
+			},
+			post: {
 				blogTitle: "",
 				imgPath: "",
-				blogHTML: ""
+				blogHTML: "",
 			},
-    };
-  },
+		};
+	},
 
-  components: {
-  },
+	components: {},
 
-  methods: {
-    fileChange() {
-      this.file = this.$refs.blogPhoto.files[0];
-      const fileName = this.file.name;
-      this.$store.commit("fileNameChange", fileName);
-      this.$store.commit("createFileURL", URL.createObjectURL(this.file));
-    },
-
-   async addPost() {
-     try {
-       const newPost = await createPost({
-				blogTitle: this.blogTitle,
-				imgPath: this.imgPath,
-				blogHTML: this.blogHTML,
-			});
-			this.$router.push({ name: "Posts", params: { id: newPost._id } });
-     } catch (error) {
-       alert(error)
-     }
-	
+	methods: {
+		fileChange() {
+			this.file = this.$refs.blogPhoto.files[0];
+			const fileName = this.file.name;
+			this.$store.commit("fileNameChange", fileName);
+			this.$store.commit("createFileURL", URL.createObjectURL(this.file));
 		},
 
-    openPreview() {
-      this.$store.commit("openPhotoPreview");
-    },
-  },
+		async addPost() {
+			try {
+				const newPost = await createPost({
+					...this.post,
+				});
+				this.$router.push({ name: "Posts", params: { id: newPost._id } });
+			} catch (error) {
+				console.log(error);
+			}
+		},
 
-  computed: {
-    profileId() {
-      return this.$store.state.profileId;
-    },
+		openPreview() {
+			this.$store.commit("openPhotoPreview");
+		},
+	},
 
-    blogCoverPhotoName() {
-      return this.$store.state.blogPhotoName;
-    },
+	computed: {
+		profileId() {
+			return this.$store.state.profileId;
+		},
 
-    blogTitle: {
-      get() {
-        return this.$store.state.blogTitle;
-      },
-      set(payload) {
-        this.$store.commit("updateBlogTitle", payload);
-      },
-    },
-    blogHTML: {
-      get() {
-        return this.$store.state.blogHTML;
-      },
-      set(payload) {
-        this.$store.commit("newBlogPost", payload);
-      },
-    },
-  },
+		blogCoverPhotoName() {
+			return this.$store.state.blogPhotoName;
+		},
+
+		blogTitle: {
+			get() {
+				return this.$store.state.blogTitle;
+			},
+			set(payload) {
+				this.$store.commit("updateBlogTitle", payload);
+			},
+		},
+		blogHTML: {
+			get() {
+				return this.$store.state.blogHTML;
+			},
+			set(payload) {
+				this.$store.commit("newBlogPost", payload);
+			},
+		},
+	},
 };
 </script>
 
 <style lang="scss">
 .create-post {
-  position: relative;
-  height: 100%;
+	position: relative;
+	height: 100%;
 
-  button {
-    margin-top: 0;
-  }
+	button {
+		margin-top: 0;
+	}
 
-  .router-button {
-    text-decoration: none;
-    color: white;
-  }
+	.router-button {
+		text-decoration: none;
+		color: white;
+	}
 
-  label,
-  button,
-  .router-button {
-    transition: 0.5s ease-in-out all;
-    align-self: center;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 20px;
-    padding: 12px 24px;
-    color: #fff;
-    background-color: #303030;
-    text-decoration: none;
+	label,
+	button,
+	.router-button {
+		transition: 0.5s ease-in-out all;
+		align-self: center;
+		font-size: 14px;
+		cursor: pointer;
+		border-radius: 20px;
+		padding: 12px 24px;
+		color: #fff;
+		background-color: #303030;
+		text-decoration: none;
 
-    &:hover {
-      background-color: rgba(48, 48, 48, 0.7);
-    }
-  }
+		&:hover {
+			background-color: rgba(48, 48, 48, 0.7);
+		}
+	}
 
-  .container {
-    position: relative;
-    height: 100%;
-    padding: 10px 25px 60px;
-  }
+	.container {
+		position: relative;
+		height: 100%;
+		padding: 10px 25px 60px;
+	}
 
-  //error-styling
+	//error-styling
 
-  .invisible {
-    opacity: 0 !important;
-  }
+	.invisible {
+		opacity: 0 !important;
+	}
 
-  .err-message {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    color: #fff;
-    margin-bottom: 10px;
-    background-color: #303030;
-    opacity: 1;
-    transition: 0.5s ease all;
+	.err-message {
+		width: 100%;
+		padding: 12px;
+		border-radius: 12px;
+		color: #fff;
+		margin-bottom: 10px;
+		background-color: #303030;
+		opacity: 1;
+		transition: 0.5s ease all;
 
-    p {
-      font-size: 14px;
-    }
+		p {
+			font-size: 14px;
+		}
 
-    span {
-      font-weight: 600;
-    }
-  }
+		span {
+			font-weight: 600;
+		}
+	}
 
-  .blog-info {
-    display: flex;
-    margin-bottom: 32px;
+	.blog-info {
+		display: flex;
+		margin-bottom: 32px;
 
-    input:nth(1) {
-      min-width: 300px;
-    }
+		input:nth(1) {
+			min-width: 300px;
+		}
 
-    input {
-      transition: 0.5s ease-in-out all;
-      padding: 10px 4px;
-      border: none;
-      border-bottom: 1px solid #303030;
+		input {
+			transition: 0.5s ease-in-out all;
+			padding: 10px 4px;
+			border: none;
+			border-bottom: 1px solid #303030;
 
-      &:focus {
-        outline: none;
-        box-shadow: 9 1px 0 0 #303030;
-      }
-    }
+			&:focus {
+				outline: none;
+				box-shadow: 9 1px 0 0 #303030;
+			}
+		}
 
-    .upload-file {
-      flex: 1;
-      margin-left: 16px;
-      position: relative;
-      display: flex;
+		.upload-file {
+			flex: 1;
+			margin-left: 16px;
+			position: relative;
+			display: flex;
 
-      input {
-        display: none;
-      }
+			input {
+				display: none;
+			}
 
-      .preview {
-        margin-left: 16px;
-        text-transform: initial;
-      }
+			.preview {
+				margin-left: 16px;
+				text-transform: initial;
+			}
 
-      span {
-        font-size: 12px;
-        margin-left: 16px;
-        align-self: center;
-      }
-    }
-  }
+			span {
+				font-size: 12px;
+				margin-left: 16px;
+				align-self: center;
+			}
+		}
+	}
 
-  .editor {
-    height: 60vh;
-    display: flex;
-    flex-direction: column;
+	.editor {
+		height: 60vh;
+		display: flex;
+		flex-direction: column;
 
-    .quillWrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+		.quillWrapper {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
 
-    .ql-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow: scroll;
-    }
+		.ql-container {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow: scroll;
+		}
 
-    .ql-editor {
-      padding: 20px 16px 30px;
-    }
-  }
+		.ql-editor {
+			padding: 20px 16px 30px;
+		}
+	}
 
-  .blog-actions {
-    margin-top: 32px;
+	.blog-actions {
+		margin-top: 32px;
 
-    button {
-      margin-right: 16px;
-    }
-  }
+		button {
+			margin-right: 16px;
+		}
+	}
 }
 </style>

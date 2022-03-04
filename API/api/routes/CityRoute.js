@@ -11,4 +11,6 @@ CityRoute.post("/create", CityController.post);
 
 CityRoute.put("/update/:name", CityController.put);
 
+CityRoute.delete("/delete/:id", CityController.delete);
+
 export default CityRoute;
