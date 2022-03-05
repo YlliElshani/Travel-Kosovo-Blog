@@ -1,61 +1,26 @@
 <template>
-	<!--<div class="blog-card-wrap">
-    <div class="blog-cards container">
-      <div class="toggle-edit">
-        <span>Toggle Editing Post</span>
-        <input type="checkbox" v-model="editPost" />
-      </div>
-      <BlogCards
-        :post="post"
-        v-for="(post, index) in sampleBlogCards"
-        :key="index"
-      />
-    </div>
-  </div>-->
-	<div class="hello">
-		<router-link :to="{ name: 'CreatePost' }">
-			<b-button variant="primary">Add Post</b-button>
-		</router-link>
-		<div v-if="loadingCities">
-			<loader />
+	<section>
+		<div class="container">
+			<router-link :to="{ name: 'CreatePost' }">
+				<b-button variant="primary">Add Post</b-button>
+			</router-link>
+			<div class="row">
+				<Card v-for="entry in postList" :key="entry._id" :post="entry" />
+			</div>
 		</div>
-		<div v-else class="cardsWrapper">
-			<b-card
-				v-for="post in posts"
-				:key="post.blogTitle"
-				:title="post.blogTitle"
-				img-alt="Image"
-				img-top
-				tag="article"
-				class="singleCard"
-			>
-				<b-card-text>
-					<div>
-						<h3>{{ post.blogHTML }}</h3>
-					</div>
-					<!-- <b-form-rating
-						id="rating-sm"
-						:value="city.rating"
-						variant="warning"
-						readonly
-						size="lg"
-					></b-form-rating> -->
-				</b-card-text>
-
-				<!-- <router-link :to="{ name: 'SingleCity', params: { name: city.name } }"
-					><b-button variant="primary"
-						>Visit {{ city.name }}</b-button
-					></router-link
-				> -->
-			</b-card>
-		</div>
-	</div>
+	</section>
 </template>
 
 <script>
 // import BlogCards from "../../components/BlogCards";
+import Card from "../../components/Card.vue";
+// import getPostList from "../../utility/Posts/getPostList";
+import { mapGetters } from "vuex";
 
 export default {
+	components: {
+		Card,
+	},
 	name: "blogs",
 	// components: {
 	// 	BlogCards,
@@ -67,6 +32,9 @@ export default {
 		posts() {
 			return this.$store.state.posts.posts;
 		},
+		...mapGetters({
+			postList: "postList",
+		}),
 
 		//Per arsye se e kemi ni on/off switch ne faqe per editim/delete
 		//duhet me pas ni menyre qysh me toggle on/off ato opsione
@@ -83,11 +51,12 @@ export default {
 		},
 	},
 	created() {
-		this.fetchPosts();
+		this.fetchPost();
 	},
 	methods: {
-		fetchPosts() {
-			this.$store.dispatch("fetchPosts");
+		async fetchPost() {
+			// const result = await getPostList();
+			this.$store.dispatch("fetchPost" /*, result*/);
 		},
 	},
 

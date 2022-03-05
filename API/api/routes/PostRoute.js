@@ -11,4 +11,10 @@ PostRoute.post("/create", PostController.post);
 
 PostRoute.put("/update/:id", PostController.put);
 
+PostRoute.put("/:id/uploadFile", PostController.uploadFile);
+
+PostRoute.put("/:postId/removeFile/:filename", PostController.deleteFile);
+
+PostRoute.delete("/delete/:id", PostController.delete);
+
 export default PostRoute;

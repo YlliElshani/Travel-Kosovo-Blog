@@ -9,4 +9,9 @@ export default [
 		name: "CreatePost",
 		component: () => import("../../views/Posts/Create/CreatePost.vue"),
 	},
+	{
+		path: "/view/:id",
+		name: "View",
+		component: () => import("../../views/Posts/View.vue"),
+	},
 ];

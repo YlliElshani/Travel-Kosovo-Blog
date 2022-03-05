@@ -5,9 +5,21 @@ export default {
 		posts: [],
 		post: {},
 		loading: false,
+		blogPhotoName: "",
+		blogPhotoFileURL: "",
 	},
-	getters: {},
+	getters: {
+		postList(state) {
+			return state.posts;
+		},
+	},
 	mutations: {
+		FILE_NAME_CHANGE(state, payload) {
+			state.blogPhotoName = payload;
+		},
+		CREATE_FILE_URL(state, payload) {
+			state.blogPhotoFileURL = payload;
+		},
 		SET_LOADING(state, payload) {
 			state.fetchingPosts = payload;
 		},
@@ -18,9 +30,15 @@ export default {
 			state.post = payload;
 			console.log(state.post);
 		},
+		SET_LIST(state, list) {
+			state.posts = list;
+		},
 	},
 	actions: {
-		fetchPosts({ commit }) {
+		// fetchPost({ commit }, list) {
+		// 	commit("SET_LIST", list);
+		// },
+		fetchPost({ commit }) {
 			commit("SET_LOADING", true);
 			return new Promise((resolve, reject) => {
 				api("localhost")

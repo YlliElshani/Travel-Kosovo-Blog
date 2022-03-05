@@ -7,6 +7,7 @@ import CityRoute from "./api/routes/CityRoute";
 import cors from "cors";
 import helmet from "helmet";
 import PostRoute from "./api/routes/postRoute";
+import fileupload from "express-fileupload";
 
 const connectionSting = "mongodb://localhost:27017/Travel_Test";
 
@@ -21,8 +22,11 @@ mongoose.connect(connectionSting).then(() => {
 			origin: "*",
 		})
 	);
+	app.use("/static", express.static(`${__dirname}/public/files`));
 
 	app.use(helmet());
+
+	app.use(fileupload());
 
 	app.use(express.urlencoded({ extended: true }));
 

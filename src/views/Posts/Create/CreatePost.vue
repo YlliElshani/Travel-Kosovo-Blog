@@ -11,56 +11,61 @@
 <template>
 	<div class="create-post">
 		<BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
-		<div class="container">
-			<div :class="{ invisible: !error }" class="err-message">
-				<p>
-					<span>
-						Error:
-					</span>
-					{{ this.errorMsg }}
-				</p>
-			</div>
-			<div class="blog-info">
-				<input
-					type="text"
-					placeholder="Enter blog title"
-					v-model="post.blogTitle"
-				/>
-				<div class="upload-file">
-					<label for="blog-photo">
-						Upload cover photo
-					</label>
-					<input
-						type="file"
-						ref="blogPhoto"
-						id="blog-photo"
-						@change="fileChange"
-						accept=".png, .jpg, .jpeg"
-					/>
-					<!-- Class binding in this button means a user can only preview a photo if it exists -->
-					<button
-						@click="openPreview"
-						class="preview"
-						:class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }"
-					>
-						Preview Photo
-					</button>
+		<form action="" @submit.prevent="addPost">
+			<div class="container">
+				<div :class="{ invisible: !error }" class="err-message">
+					<p>
+						<span>
+							Error:
+						</span>
+						{{ this.errorMsg }}
+					</p>
 				</div>
-			</div>
-			<div class="editor">
+				<div class="blog-info">
+					<input
+						type="text"
+						placeholder="Enter blog title"
+						v-model="post.blogTitle"
+					/>
+					<div class="upload-file">
+						<label for="blog-photo">
+							Upload cover photo
+						</label>
+						<input
+							type="file"
+							ref="blogPhoto"
+							id="blog-photo"
+							@change="fileChange"
+							accept=".png, .jpg, .jpeg"
+						/>
+						<!-- Class binding in this button means a user can only preview a photo if it exists -->
+						<button
+							@click="openPreview"
+							class="preview"
+							:class="{
+								'button-inactive': !this.$store.state.blogPhotoFileURL,
+							}"
+						>
+							Preview Photo
+						</button>
+					</div>
+				</div>
+				<!-- <div class="editor">
 				<vue-editor
 					:editorOptions="editorSettings"
 					v-model="post.blogHTML"
 					useCustomImageHamdler
 				/>
+			</div> -->
+				<div>
+					<input type="text" v-model="post.blogHTML" />
+				</div>
+				<div class="blog-actions">
+					<button class="btn btn-primary" type="submit">Publish</button>
+					<!-- <router-link class="router-button" to="#">Post Preview</router-link> -->
+				</div>
 			</div>
-			<div class="blog-actions">
-				<button @click="addPost">
-					Publish Blog
-				</button>
-				<!-- <router-link class="router-button" to="#">Post Preview</router-link> -->
-			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
@@ -70,6 +75,7 @@ window.Quill = Quill;
 const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
 import createPost from "../../../utility/Posts/createPost";
+import BlogCoverPreview from "@/components/BlogCoverPreview.vue";
 
 export default {
 	name: "CreatePost",
@@ -91,7 +97,7 @@ export default {
 		};
 	},
 
-	components: {},
+	components: { BlogCoverPreview },
 
 	methods: {
 		fileChange() {
@@ -103,12 +109,12 @@ export default {
 
 		async addPost() {
 			try {
-				const newPost = await createPost({
+				const newpost = await createPost({
 					...this.post,
 				});
-				this.$router.push({ name: "Posts", params: { id: newPost._id } });
+				this.$router.push({ name: "View", params: { id: newpost._id } });
 			} catch (error) {
-				console.log(error);
+				console.log(`Errori: ${error}`);
 			}
 		},
 
