@@ -7,6 +7,7 @@ import CityRoute from "./api/routes/CityRoute";
 import cors from "cors";
 import helmet from "helmet";
 import PostRoute from "./api/routes/postRoute";
+// import GastronomyRoute from './api/routes/GastronomyRoute'
 import fileupload from "express-fileupload";
 
 const connectionSting = "mongodb://localhost:27017/Travel_Test";
@@ -39,6 +40,8 @@ mongoose.connect(connectionSting).then(() => {
 	app.use("/cities", CityRoute);
 
 	app.use("/posts", PostRoute);
+
+	// app.use("/gastronomy", GastronomyRoute);
 
 	app.listen(port, () => {
 		console.log(`Travel blog API running on port ${port}`);

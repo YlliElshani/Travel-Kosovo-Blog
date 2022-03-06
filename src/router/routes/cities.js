@@ -32,7 +32,7 @@ export default [
 		component: () => import("../../views/Cities/Details/City.vue"),
 	},
 	{
-		path: "/cities/:id/Gastronomy",
+		path: "/cities/:name/Gastronomy",
 		name: "CityGastronomy",
 		component: () => import("../../views/Cities/Details/Gastronomy.vue"),
 	},

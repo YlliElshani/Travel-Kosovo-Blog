@@ -1,4 +1,7 @@
 import CityModel from "../models/CityModel";
+import GastronomyModel from "../models/GastronomyModel";
+import ExperienceModel from "../models/ExperienceModel";
+import PlaceModel from "../models/PlaceModel";
 import updateCitySchema from "../validator/CityValidator/updateCitySchema";
 
 export default {
@@ -45,5 +48,77 @@ export default {
 		const updateCity = await CityModel.updateOne({ name: city.name }, city);
 
 		return res.json(updateCity);
+	},
+	getCitiesGastronomy: async (req, res) => {
+		const { cityId } = req.params;
+
+		const city = await CityModel.findOne(cityId).populate("gastronomies");
+
+		res.json(city.gastronomies);
+	},
+	AddCityGastronomy: async (req, res) => {
+		const { cityId } = req.params;
+
+		const newGastronomy = new GastronomyModel(req.body);
+
+		const city = await CityModel.findOne(cityId);
+
+		newGastronomy.city = city;
+
+		await newGastronomy.save();
+
+		city.gastronomies.push(newGastronomy);
+
+		await city.save();
+
+		res.json(newGastronomy);
+	},
+	getCitiesExperience: async (req, res) => {
+		const { cityId } = req.params;
+
+		const city = await CityModel.findOne(cityId).populate("experiences");
+
+		res.json(city.experiences);
+	},
+	AddCityExperience: async (req, res) => {
+		const { cityId } = req.params;
+
+		const newExperience = new ExperienceModel(req.body);
+
+		const city = await CityModel.findOne(cityId);
+
+		newExperience.city = city;
+
+		await newExperience.save();
+
+		city.experiences.push(newExperience);
+
+		await city.save();
+
+		res.json(newExperience);
+	},
+	getCitiesPlace: async (req, res) => {
+		const { cityId } = req.params;
+
+		const city = await CityModel.findOne(cityId).populate("places");
+
+		res.json(city.places);
+	},
+	AddCityPlace: async (req, res) => {
+		const { cityId } = req.params;
+
+		const newPlace = new PlaceModel(req.body);
+
+		const city = await CityModel.findOne(cityId);
+
+		newPlace.city = city;
+
+		await newPlace.save();
+
+		city.places.push(newPlace);
+
+		await city.save();
+
+		res.json(newPlace);
 	},
 };
