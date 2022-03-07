@@ -21,6 +21,9 @@ export default {
     SET_CURRENT_CITY(state, payload) {
       state.city = payload;
     },
+    REMOVE_CITY(state, name) {
+      state.cities = state.cities.filter((c) => c.name !== name);
+    },
   },
   actions: {
     fetchCities({ commit }) {
@@ -57,24 +60,23 @@ export default {
           });
       });
     },
-    // deleteCity({ commit }, cityName) {
-    // 	commit("SET_LOADING", true);
-    // 	return new Promise((resolve, reject) => {
-    // 		api("localhost")
-    // 			.delete(`/cities/${cityName}`)
-    // 			.then((response) => {
-    // 				commit("SET_CURRENT_CITY", response.data);
-    // 				resolve(response);
-    // 			})
-    // 			.catch((error) => {
-    // 				reject(error);
-    // 			})
-    // 			.finally(() => {
-    // 				console.log(this.state.currentCity);
-    // 				commit("SET_LOADING", false);
-    // 			});
-    // 	});
-    // },
+    removeCity({ commit }, cityName) {
+      commit("SET_LOADING", true);
+      return new Promise((resolve, reject) => {
+        api("localhost")
+          .delete(`/cities/delete/${cityName}`)
+          .then((response) => {
+            commit("REMOVE_CITY", cityName);
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            commit("SET_LOADING", false);
+          });
+      });
+    },
     setCities({ commit }, city) {
       commit("SET_LOADING", true);
       return new Promise((resolve, reject) => {

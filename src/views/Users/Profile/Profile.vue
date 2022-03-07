@@ -7,6 +7,7 @@
     />
     <div class="container">
       <h2>Account Settings</h2>
+      <button @click="getCurrentUser">GET STATE</button>
       <div class="profile-info">
         <div class="initials">{{ $store.state.profileInitials }}</div>
         <div class="admin-badge">
@@ -57,16 +58,21 @@ export default {
     closeModal() {
       this.modalActive = !this.modalActive;
     },
-
+    getCurrentUser() {
+      console.log(this.$store.state);
+    },
     updateProfile() {
-      this.$store.dispatch("updateUserSettings");
+      this.$store.state.users.dispatch("updateUserSettings");
       this.modalActive = !this.modalActive;
     },
   },
   computed: {
+    currentUser() {
+      return this.$store.state.users.currentUser;
+    },
     firstName: {
       get() {
-        return this.$store.state.profileFirstName;
+        return this.$store.state.users.profileFirstName;
       },
       set(payload) {
         this.$store.commit("changeFirstName", payload);
@@ -74,7 +80,7 @@ export default {
     },
     lastName: {
       get() {
-        return this.$store.state.profileLastName;
+        return this.$store.state.users.profileLastName;
       },
       set(payload) {
         this.$store.commit("changeLastName", payload);
@@ -82,14 +88,14 @@ export default {
     },
     username: {
       get() {
-        return this.$store.state.profileUsername;
+        return this.$store.state.users.profileUsername;
       },
       set(payload) {
         this.$store.commit("changeUsername", payload);
       },
     },
     email() {
-      return this.$store.state.profileEmail;
+      return this.$store.state.users.profileEmail;
     },
   },
 };

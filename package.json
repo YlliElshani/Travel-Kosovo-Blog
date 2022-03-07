@@ -21,6 +21,7 @@
     "vue-svg-loader": "^0.16.0",
     "vue2-dropzone": "^3.6.0",
     "vue2-editor": "^2.10.2",
+    "vuetify": "^2.6.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

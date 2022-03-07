@@ -15,6 +15,7 @@ export default {
       profileLastName: null,
       profileUserName: null,
       profileInitials: null,
+      roles: null,
     },
   },
   mutations: {
@@ -30,6 +31,11 @@ export default {
       state.currentUser.profileFirstName = doc.data().firstName;
       state.currentUser.profileLastName = doc.data().lastName;
       state.currentUser.profileUserName = doc.data().username;
+      state.currentUser.roles = doc.data().roles;
+    },
+    SET_ADMIN(state, payload) {
+      const adminRole = payload.includes(1)
+      state.isAdmin = adminRole;
     },
     UPDATE_USER(state, payload) {
       state.user = payload;
@@ -95,6 +101,8 @@ export default {
         .doc(firebase.auth().currentUser.uid);
       const dbResults = await dataBase.get();
       commit("SET_PROFILE_INFO", dbResults);
+      commit("SET_LOGGED_IN", true);
+      commit("SET_ADMIN", dbResults.data().roles);
       commit("SET_LOADING", false);
       // commit("setProfileInitials");
       // const token = await user.getIdTokenResult();

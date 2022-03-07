@@ -69,9 +69,9 @@ export default {
       username: "",
       email: "",
       password: "",
-      roles: null,
       error: null,
       errorMsg: "",
+      roles: [0],
     };
   },
 
@@ -99,6 +99,7 @@ export default {
           lastName: this.lastName,
           username: this.username,
           email: this.email,
+          roles: this.roles,
         });
         this.$router.push({ name: "Home" });
         return;
