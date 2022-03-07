@@ -12,9 +12,7 @@
 </template>
 
 <script>
-// import BlogCards from "../../components/BlogCards";
 import Card from "../../components/Card.vue";
-// import getPostList from "../../utility/Posts/getPostList";
 import { mapGetters } from "vuex";
 
 export default {
@@ -22,9 +20,6 @@ export default {
 		Card,
 	},
 	name: "blogs",
-	// components: {
-	// 	BlogCards,
-	// },
 	computed: {
 		sampleBlogCards() {
 			return this.$store.state.sampleBlogCards;
@@ -35,12 +30,6 @@ export default {
 		...mapGetters({
 			postList: "postList",
 		}),
-
-		//Per arsye se e kemi ni on/off switch ne faqe per editim/delete
-		//duhet me pas ni menyre qysh me toggle on/off ato opsione
-		//kjo u bo tu e qit ni vlere ne store editPost, edhe tu
-		//manipulu me at vlere ktu, ja vendosim ni get per me marr vleren
-		//edhe e vendosim ni set per e editu at vlere me ni payload(true/false)
 		editPost: {
 			get() {
 				return this.$store.state.editPost;
@@ -130,9 +119,4 @@ export default {
 		}
 	}
 }
-// .hello {
-// 	display: flex;
-// 	flex-direction: column;
-
-// }
 </style>

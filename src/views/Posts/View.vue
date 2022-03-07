@@ -9,13 +9,29 @@
 
 					<p>Description: {{ this.post.blogHTML }}</p>
 
-					<!-- <p>Price: {{ this.realEstate.price }}</p> -->
 				</div>
 				<Dropzone :postId="this.$route.params.id" :initialFiles="post.files" />
 			</div>
+			<router-link class="goToPosts" :to="{ name: 'Posts' }">
+				Go to Posts
+			</router-link>
 		</div>
 	</section>
 </template>
+
+<style lang="scss" scoped>
+	.goToPosts{
+		text-decoration: none;
+		margin-left:20%;
+		margin-right: 60%;
+		width: 20%;
+		color: black;
+		font-size: 20px;
+		text-transform: bold;
+	}
+</style>
+
+
 <script>
 import getPost from "../../utility/Posts/getPost";
 import Dropzone from "@/components/DropZone";

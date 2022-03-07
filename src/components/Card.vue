@@ -1,32 +1,37 @@
 <template>
-	<div class="col-lg-4 mt-4 col-md-6 col-sm-12">
-		<div class="card">
+	<div class="container">
+		<h2>
+			Our blogposts!
+		</h2>
+		<div>
+			<div class="posts">	
 			<img
 				v-if="src"
 				:src="src"
-				class="card-img-top"
 				style="max-height: 150px"
 			/>
-			<div class="card-body">
-				<h5 class="card-title">{{ post.blogTitle }}</h5>
-				<!-- <p class="card-text">Square meters: {{ realEstate.squareMeters }}</p> -->
+				<h5>{{ post.blogTitle }}</h5>
+				<p>
+					{{post.blogHTML}}
+				</p>
+				<div class="btns">
 				<router-link
-					class="btn btn-primary"
+					class="link"
 					:to="{ name: 'View', params: { id: post._id } }"
-					>View</router-link
-				>
-				<button type="button" class="btn btn-danger ml-2" @click="deletePost">
+					>See more</router-link
+				>			
+				<button type="button" @click="deletePost">
 					Delete
 				</button>
+				</div>
 			</div>
+		    <hr>
 		</div>
 	</div>
 </template>
 
 <script>
-// import apiRequest from "../utility/apiRequest";
 import deletePost from "../utility/Posts/deletePost";
-// import getPostList from "../utility/Posts/getPostList";
 export default {
 	props: {
 		post: Object,
@@ -42,9 +47,6 @@ export default {
 		async deletePost() {
 			try {
 				await deletePost(this.post._id);
-
-				// const result = await getPostList();
-				// this.$store.dispatch("fetchPost", result);
 			} catch (err) {
 				console.log(`errori    ${err.message}`);
 			}
@@ -52,3 +54,101 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+
+	.container{
+
+		h2{
+			text-align: center;
+			align-self: center;
+		}
+
+	}
+
+	.posts{
+		display: flex;
+		flex-direction: row;
+		padding: 15px;
+		margin-right: 5%;
+		margin-left: 5%;
+		width: 90%;
+		justify-content: space-between;
+		flex-wrap:wrap;
+
+		@media (max-width: 700px) {
+			.posts{
+				flex-direction: row;
+			}
+
+			
+
+			img {
+				display: none;
+			}
+
+			h5{
+				margin-left: 5%;
+				margin-right: 3%;
+				padding: 10px;
+				text-align: center !important;
+				width:100% !important;
+			}
+		}
+
+		img{
+			width: 35%;
+			height: 100%;
+		}
+
+		h5{
+			margin-left: 5%;
+			margin-right: 3%;
+			font-size: 28px;
+			padding: 10px;
+			text-align: center;
+			width:15%;
+		}
+
+		p{
+			margin-top: 3%;
+			font-size: 23px;
+			margin-bottom: 3%;
+		}
+
+		@media (max-width: 700px) {
+			.btns{
+				width: 190% !important;
+				.link{
+					width: 150%;
+				}
+			}
+		}
+
+		.btns{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			padding: 15px;
+			width: 30%;
+
+			.link{
+				padding: 15px;
+			}
+
+			button{
+			background-color: black;
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin-bottom: 3%;
+			margin-top: 3%;
+			margin-left: 5%;
+			}
+		}
+	}
+</style>
