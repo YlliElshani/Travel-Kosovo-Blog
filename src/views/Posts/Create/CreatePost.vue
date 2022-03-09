@@ -1,84 +1,29 @@
-<!--<template>
-	<div class="create-post">
-		<input type="text" placeholder="Title" v-model="post.blogTitle" />
-		<input type="text" placeholder="Image Path" v-model="post.imgPath" />
-		<input type="text" placeholder="Description" v-model="post.blogHTML" />
-		<button @click="addPost">
-			Add
-		</button>
-	</div>
-</template>-->
 <template>
-	<div class="create-post">
-		<BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
+	<div class="createPost">
 		<form action="" @submit.prevent="addPost">
 			<div class="container">
-				<div :class="{ invisible: !error }" class="err-message">
-					<p>
-						<span>
-							Error:
-						</span>
-						{{ this.errorMsg }}
-					</p>
-				</div>
-				<div class="blog-info">
 					<input
+						required
 						type="text"
 						placeholder="Enter blog title"
 						v-model="post.blogTitle"
 					/>
-					<div class="upload-file">
-						<label for="blog-photo">
-							Upload cover photo
-						</label>
-						<input
-							type="file"
-							ref="blogPhoto"
-							id="blog-photo"
-							@change="fileChange"
-							accept=".png, .jpg, .jpeg"
-						/>
-						<!-- Class binding in this button means a user can only preview a photo if it exists -->
-						<button
-							@click="openPreview"
-							class="preview"
-							:class="{
-								'button-inactive': !this.$store.state.blogPhotoFileURL,
-							}"
-						>
-							Preview Photo
-						</button>
-					</div>
-				</div>
-				<!-- <div class="editor">
-				<vue-editor
-					:editorOptions="editorSettings"
-					v-model="post.blogHTML"
-					useCustomImageHamdler
-				/>
-			</div> -->
-				<div>
-					<input type="text" v-model="post.blogHTML" />
-				</div>
-				<div class="blog-actions">
-					<button class="btn btn-primary" type="submit">Publish</button>
-					<!-- <router-link class="router-button" to="#">Post Preview</router-link> -->
-				</div>
+					<textarea v-model="post.blogHTML" />
+					<button type="submit">Continue</button>
 			</div>
 		</form>
 	</div>
 </template>
 
 <script>
-import Quill from "quill";
-window.Quill = Quill;
-const ImageResize = require("quill-image-resize-module").default;
-Quill.register("modules/imageResize", ImageResize);
 import createPost from "../../../utility/Posts/createPost";
-import BlogCoverPreview from "@/components/BlogCoverPreview.vue";
 
 export default {
 	name: "CreatePost",
+
+	components:{
+	},
+
 	data() {
 		return {
 			file: null,
@@ -97,7 +42,6 @@ export default {
 		};
 	},
 
-	components: { BlogCoverPreview },
 
 	methods: {
 		fileChange() {
@@ -106,6 +50,7 @@ export default {
 			this.$store.commit("fileNameChange", fileName);
 			this.$store.commit("createFileURL", URL.createObjectURL(this.file));
 		},
+
 
 		async addPost() {
 			try {
@@ -153,140 +98,78 @@ export default {
 </script>
 
 <style lang="scss">
-.create-post {
-	position: relative;
-	height: 100%;
 
-	button {
-		margin-top: 0;
-	}
 
-	.router-button {
-		text-decoration: none;
-		color: white;
-	}
-
-	label,
-	button,
-	.router-button {
-		transition: 0.5s ease-in-out all;
-		align-self: center;
-		font-size: 14px;
-		cursor: pointer;
-		border-radius: 20px;
-		padding: 12px 24px;
-		color: #fff;
-		background-color: #303030;
-		text-decoration: none;
-
-		&:hover {
-			background-color: rgba(48, 48, 48, 0.7);
-		}
-	}
-
-	.container {
-		position: relative;
-		height: 100%;
-		padding: 10px 25px 60px;
-	}
-
-	//error-styling
-
-	.invisible {
-		opacity: 0 !important;
-	}
-
-	.err-message {
-		width: 100%;
-		padding: 12px;
-		border-radius: 12px;
-		color: #fff;
-		margin-bottom: 10px;
-		background-color: #303030;
-		opacity: 1;
-		transition: 0.5s ease all;
-
-		p {
-			font-size: 14px;
-		}
-
-		span {
-			font-weight: 600;
-		}
-	}
-
-	.blog-info {
-		display: flex;
-		margin-bottom: 32px;
-
-		input:nth(1) {
-			min-width: 300px;
-		}
-
-		input {
-			transition: 0.5s ease-in-out all;
-			padding: 10px 4px;
-			border: none;
-			border-bottom: 1px solid #303030;
-
-			&:focus {
-				outline: none;
-				box-shadow: 9 1px 0 0 #303030;
+		@media (max-width:900px) {
+						.createPost{
+					justify-content: center !important;
+					margin-right: 0%;
+					margin-left: 0%;
 			}
 		}
 
-		.upload-file {
-			flex: 1;
-			margin-left: 16px;
-			position: relative;
-			display: flex;
+.createPost {
 
-			input {
-				display: none;
-			}
+	    @media (max-width: 900px) {
 
-			.preview {
-				margin-left: 16px;
-				text-transform: initial;
-			}
+				.container{
+					width: 100% !important;
+					flex-wrap: nowrap;
+					justify-content: center;
+				}
 
-			span {
-				font-size: 12px;
-				margin-left: 16px;
-				align-self: center;
-			}
-		}
-	}
+        }
 
-	.editor {
-		height: 60vh;
+	margin-right: 5%;
+	margin-left: 5%;
+	width:90%;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	padding: 15px;
+
+	.container{
+		padding: 15px;
+		margin-top: 3%;
+		margin-bottom: 3%;
+		width: 160%;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 
-		.quillWrapper {
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			height: 100%;
+		input{
+			border: 1px solid black;
+			font-size: 20px;
+			height: 20%;
+			width: auto;
+			padding: 15px;
+			margin-bottom: 3%;
+			margin-top: 3%;
 		}
 
-		.ql-container {
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			overflow: scroll;
+		textarea{
+			font-size: 20px;
+			height: 20%;
+			width: auto;
+			padding: 15px;
+			    -webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			border: 3px solid black;
+			margin-bottom: 3%;
+			margin-top: 3%;
 		}
-
-		.ql-editor {
-			padding: 20px 16px 30px;
-		}
-	}
-
-	.blog-actions {
-		margin-top: 32px;
-
-		button {
-			margin-right: 16px;
+		button{
+			background-color: black;
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin-bottom: 3%;
+			margin-top: 3%;
 		}
 	}
 }
