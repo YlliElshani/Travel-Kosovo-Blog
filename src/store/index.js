@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 import app from "./app/index";
 
@@ -21,6 +22,11 @@ const initialState = {
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   modules: {
     app,
     posts,
@@ -30,6 +36,7 @@ export default new Vuex.Store({
   state: {},
   mutations: {
     RESET_STATE(state) {
+      sessionStorage.clear();
       Object.keys(state).forEach((key) => {
         Object.assign(state[key], initialState[key]);
       });

@@ -1,7 +1,7 @@
 <template>
   <div class="container citiesContainer">
     <h1 style="text-align: center">Cities</h1>
-    <div>
+    <div v-if="isAdmin">
       <router-link :to="{ name: 'CreateCity' }">
         <b-button variant="primary">Add City</b-button>
       </router-link>
@@ -36,7 +36,7 @@
             >Visit {{ city.name }}</b-button
           ></router-link
         >
-        <div>
+        <div v-if="isAdmin">
           <button
             type="button"
             class="btn btn-danger"
@@ -52,7 +52,7 @@
 
 <script>
 import loader from "../../components/Loading.vue";
-// import deleteCity from "../../utility/City/deleteCity";
+
 export default {
   data() {
     return {};
@@ -62,9 +62,14 @@ export default {
   },
   created() {
     this.fetchCities();
-    // this.setCity();
   },
   computed: {
+    loggedIn() {
+      return this.$store.state.users.loggedIn;
+    },
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     loadingCities() {
       return this.$store.state.cities.loading;
     },
@@ -79,15 +84,9 @@ export default {
     removeCity(cityName) {
       this.$store.dispatch("removeCity", cityName);
     },
-    // setCity() {
-    // 	this.$store.dispatch("setCity");
-    // },
     generateRating() {
       return Math.floor(Math.random() * (5 - 1 + 1)) + 1; //multiply to generate random number between 0, 10
     },
-    // async removeCity(id) {
-    // 	await deleteCity(id);
-    // },
   },
   name: "Cities",
 };

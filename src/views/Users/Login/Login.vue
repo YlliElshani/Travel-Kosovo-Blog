@@ -39,9 +39,8 @@
 <script>
 import email from "../../../assets/Icons/envelope-regular.svg";
 import password from "../../../assets/Icons/lock-alt-solid.svg";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// require("../../../firebase/firebaseInit.js");
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
   name: "Login",
@@ -55,28 +54,44 @@ export default {
     return {
       email: null,
       password: null,
-      error: null,
-      errorMsg: "",
+      error: false,
+      errorMsg: null,
     };
   },
-
+  computed: {
+    loggedIn() {
+      return this.$store.state.users.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push({ name: "Home" });
+    }
+  },
   methods: {
     signIn() {
       const user = {
         email: this.email,
         password: this.password,
       };
-      this.$store
-        .dispatch("loginUser", user)
-        .then(() => {
-          this.$router.push({ name: "Home" });
-          this.error = false;
-          this.errorMsg = "";
-        })
-        .catch((err) => {
-          this.error = true;
-          this.errorMsg = err.message;
-        });
+      if (this.email === null || this.password === null) {
+        this.error = true;
+        this.errorMsg = "Email and Password must be filled!";
+      } else {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(user.email, user.password)
+          .then(() => {
+            this.error = false;
+            this.errorMsg = null;
+            this.$store.dispatch("getCurrentUser");
+            this.$router.push({ name: "Home" });
+          })
+          .catch((err) => {
+            this.error = true;
+            this.errorMsg = err.message;
+          });
+      }
     },
   },
 };
@@ -160,7 +175,9 @@ export default {
         }
       }
     }
-
+    .error {
+      color: red;
+    }
     .forgot-password {
       text-decoration: none;
       color: black;
@@ -175,5 +192,5 @@ export default {
       }
     }
   }
-}</style
->>
+}
+</style>

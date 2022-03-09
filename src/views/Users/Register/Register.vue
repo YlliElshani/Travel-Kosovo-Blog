@@ -64,49 +64,76 @@ export default {
 
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
-      error: null,
-      errorMsg: "",
+      firstName: null,
+      lastName: null,
+      username: null,
       roles: [0],
+      email: null,
+      password: null,
+      error: null,
+      errorMsg: null,
     };
   },
-
+  computed: {
+    loggedIn() {
+      return this.$store.state.users.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push({ name: "Home" });
+    }
+  },
   methods: {
     async register() {
-      if (
-        this.email !== "" &&
-        this.password !== "" &&
-        this.firstName !== "" &&
-        this.lastName !== "" &&
-        this.username !== ""
-      ) {
-        this.error = false;
-        this.errorMsg = "";
-        const firebaseAuth = await firebase.auth();
-        const createUser = await firebaseAuth.createUserWithEmailAndPassword(
-          this.email,
-          this.password
-        );
-        const result = await createUser;
-        const dataBase = db.collection("users").doc(result.user.uid);
-        //could have naming error here
-        await dataBase.set({
-          firstName: this.firstName,
-          lastName: this.lastName,
-          username: this.username,
-          email: this.email,
-          roles: this.roles,
-        });
-        this.$router.push({ name: "Home" });
-        return;
+      const user = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        username: this.username,
+        email: this.email,
+        roles: this.roles,
+      };
+      if (this.isFormValid()) {
+        try {
+          const firebaseAuth = firebase.auth();
+          const createUser = await firebaseAuth.createUserWithEmailAndPassword(
+            this.email,
+            this.password
+          );
+          const result = await createUser;
+          const dataBase = db.collection("users").doc(result.user.uid);
+
+          await dataBase.set({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            email: user.email,
+            roles: user.roles,
+          });
+          this.error = false;
+          this.errorMsg = null;
+          this.$router.push({ name: "Home" });
+        } catch (err) {
+          this.error = true;
+          this.errorMsg = err.message;
+        }
+      } else {
+        this.error = true;
+        this.errorMsg = "Please fill out all the fields!";
       }
-      this.error = true;
-      this.errorMsg = "Please fill out all the fields!";
-      return;
+    },
+    isFormValid() {
+      if (
+        this.firstName !== null &&
+        this.lastName !== null &&
+        this.username !== null &&
+        this.email !== null &&
+        this.password !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };
@@ -116,6 +143,9 @@ export default {
 .register {
   h2 {
     max-width: 350px;
+  }
+  .error {
+    color: red;
   }
 }
 </style>

@@ -57,7 +57,7 @@
                   <p>Profile</p>
                 </router-link>
               </div>
-              <div class="option">
+              <div v-if="isAdmin" class="option">
                 <router-link class="option" :to="{ name: 'Admin' }">
                   <adminIcon class="icon" />
                   <p>Admin</p>
@@ -122,7 +122,6 @@ export default {
 
   data() {
     return {
-      //   isAdminDashboard: false,
       profileMenu: null,
       mobile: null,
       mobileNav: null,
@@ -133,19 +132,19 @@ export default {
   },
 
   created() {
+    if (!this.isAdmin) {
+      this.$router.push({ name: "Home" });
+    }
     this.checkScreen();
     window.addEventListener("resize", this.checkScreen);
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     user() {
       return this.$store.state.users.currentUser;
     },
-    // isAdminDashboard() {
-    //   if (this.$router.currentRoute.fullPath.includes("Admin")) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
   },
   methods: {
     checkScreen() {
@@ -158,18 +157,16 @@ export default {
       this.mobileNav = false;
       return;
     },
-
     toggleMobileNav() {
       this.mobileNav = !this.mobileNav;
     },
-
     toggleProfileMenu(e) {
       if (e.target === this.$refs.profile) {
         this.profileMenu = !this.profileMenu;
       }
     },
-
     signOut() {
+      this.$store.commit("RESET_STATE");
       firebase.auth().signOut();
       this.$store.dispatch("signUserOut");
       window.location.reload();
@@ -255,12 +252,12 @@ nav {
 
       .profile-menu {
         position: absolute;
+        z-index: 3;
         top: 60px;
         right: 0;
         width: 250px;
         background-color: #303030;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
         .info {
           display: flex;

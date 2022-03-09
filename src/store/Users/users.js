@@ -1,4 +1,3 @@
-import api from "@/libs/api";
 import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../../firebase/firebaseInit";
@@ -7,6 +6,8 @@ export default {
   state: {
     loading: true,
     loggedIn: false,
+    error: false,
+    errorMsg: null,
     isAdmin: false,
     currentUser: {
       profileId: null,
@@ -34,7 +35,7 @@ export default {
       state.currentUser.roles = doc.data().roles;
     },
     SET_ADMIN(state, payload) {
-      const adminRole = payload.includes(1)
+      const adminRole = payload.includes(1);
       state.isAdmin = adminRole;
     },
     UPDATE_USER(state, payload) {
@@ -59,31 +60,6 @@ export default {
     fetchUser({ commit }, user) {
       commit("SET_USER", user ? user : null);
       commit("SET_LOGGED_IN", user !== null);
-    },
-    createUser({ commit }, value) {
-      commit("SET_LOADING", true);
-      commit("SET_USER", value ? value : null);
-      return new Promise((resolve, reject) => {
-        api("localhost")
-          .post(`/register`, value)
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((error) => {
-            reject(error);
-          })
-          .finally(() => {
-            commit("SET_LOADING", true);
-          });
-      });
-    },
-    loginUser({ commit, dispatch }, user) {
-      commit("SET_LOADING", true);
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(user.email, user.password)
-        .then(() => dispatch("getCurrentUser"));
-      commit("SET_LOADING", false);
     },
     // 	async updateUserSettings({ commit, state }) {
     // 		const dataBase = await db.collection("users").doc(state.profileId);
