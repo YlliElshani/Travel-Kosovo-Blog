@@ -1,50 +1,52 @@
 <template>
-	<div class="container">
-		<h2>
-			Our blogposts!
-		</h2>
-		<div>
-			<div class="posts">
-				<img v-if="src" :src="src" style="max-height: 150px" />
-				<h5>{{ post.blogTitle }}</h5>
-				<p>
-					{{ post.blogHTML }}
-				</p>
-				<div class="btns">
-					<router-link
-						class="link"
-						:to="{ name: 'View', params: { id: post._id } }"
-						>See more</router-link
-					>
-					<button type="button" @click="removePost(post._id)">
-						Delete
-					</button>
-				</div>
+	<div class="col-lg-4 mt-4 col-md-6 col-sm-12">
+		<div class="card">
+			<img
+				v-if="src"
+				:src="src"
+				class="card-img-top"
+				style="max-height: 150px"
+			/>
+			<div class="card-body">
+				<h5 class="card-title">{{ city.name }}</h5>
+				<h5 class="card-title">{{ city.description }}</h5>
+				<h5 class="card-title">{{ city.rating }}</h5>
+				<!-- <p class="card-text">Square meters: {{ realEstate.squareMeters }}</p> -->
+				<router-link
+					class="btn btn-primary"
+					:to="{ name: 'SingleCity', params: { id: city._id } }"
+					>View</router-link
+				>
+				<button
+					type="button"
+					class="btn btn-danger ml-2"
+					@click.prevent="removeCity(city.name)"
+				>
+					Delete
+				</button>
 			</div>
-			<hr />
 		</div>
 	</div>
 </template>
 
 <script>
-// import deletePost from "../utility/Posts/deletePost";
 export default {
 	props: {
-		post: Object,
+		city: Object,
 	},
 	computed: {
 		src() {
-			const filename = this.post.files?.split(";")[0];
+			const filename = this.city.files?.split(";")[0];
 
 			return filename ? `http://localhost:1000/static/${filename}` : null;
 		},
-		posts() {
-			return this.$store.state.posts.posts;
+		cities() {
+			return this.$store.state.cities.cities;
 		},
 	},
 	methods: {
-		removePost(postId) {
-			this.$store.dispatch("removePost", postId);
+		removeCity(cityName) {
+			this.$store.dispatch("removeCity", cityName);
 		},
 	},
 };

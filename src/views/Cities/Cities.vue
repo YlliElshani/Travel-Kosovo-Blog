@@ -1,7 +1,7 @@
-<template>
+<!--<template>
   <div class="container citiesContainer">
     <h1 style="text-align: center">Cities</h1>
-    <div v-if="isAdmin">
+    <div>
       <router-link :to="{ name: 'CreateCity' }">
         <b-button variant="primary">Add City</b-button>
       </router-link>
@@ -36,7 +36,7 @@
             >Visit {{ city.name }}</b-button
           ></router-link
         >
-        <div v-if="isAdmin">
+        <div>
           <button
             type="button"
             class="btn btn-danger"
@@ -48,64 +48,86 @@
       </b-card>
     </div>
   </div>
+</template>-->
+
+<template>
+	<section>
+		<div class="container">
+			<router-link :to="{ name: 'CreateCity' }">
+				<b-button variant="primary">Add City</b-button>
+			</router-link>
+			<div class="row">
+				<CardCity v-for="entry in cityList" :key="entry._id" :city="entry" />
+			</div>
+		</div>
+	</section>
 </template>
 
 <script>
-import loader from "../../components/Loading.vue";
-
+// import loader from "../../components/Loading.vue";
+import CardCity from "../../components/CardCity.vue";
+import { mapGetters } from "vuex";
+import getCityList from "../../utility/City/getCityList";
+// import deleteCity from "../../utility/City/deleteCity";
 export default {
-  data() {
-    return {};
-  },
-  components: {
-    loader,
-  },
-  created() {
-    this.fetchCities();
-  },
-  computed: {
-    loggedIn() {
-      return this.$store.state.users.loggedIn;
-    },
-    isAdmin() {
-      return this.$store.state.users.isAdmin;
-    },
-    loadingCities() {
-      return this.$store.state.cities.loading;
-    },
-    cities() {
-      return this.$store.state.cities.cities;
-    },
-  },
-  methods: {
-    fetchCities() {
-      this.$store.dispatch("fetchCities");
-    },
-    removeCity(cityName) {
-      this.$store.dispatch("removeCity", cityName);
-    },
-    generateRating() {
-      return Math.floor(Math.random() * (5 - 1 + 1)) + 1; //multiply to generate random number between 0, 10
-    },
-  },
-  name: "Cities",
+	data() {
+		return {};
+	},
+	components: {
+		CardCity,
+	},
+	created() {
+		this.fetchCity();
+		// this.setCity();
+	},
+	computed: {
+		loadingCities() {
+			return this.$store.state.cities.loading;
+		},
+		...mapGetters({
+			cityList: "cityList",
+		}),
+		cities() {
+			return this.$store.state.cities.cities;
+		},
+	},
+	methods: {
+		async fetchCity() {
+			const result = await getCityList();
+			// console.log(result);
+			this.$store.dispatch("fetchCity", result);
+		},
+		removeCity(cityName) {
+			this.$store.dispatch("removeCity", cityName);
+		},
+		// setCity() {
+		// 	this.$store.dispatch("setCity");
+		// },
+		generateRating() {
+			return Math.floor(Math.random() * (5 - 1 + 1)) + 1; //multiply to generate random number between 0, 10
+		},
+		// async removeCity(id) {
+		// 	await deleteCity(id);
+		// },
+	},
+	name: "Cities",
 };
 </script>
 
 <style lang="scss" scoped>
 .cardsWrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 
-  .singleCard {
-    margin: 0.1rem;
-    max-width: 20rem;
-    img {
-      min-height: 12rem;
-      max-height: 12rem;
-      object-fit: cover;
-    }
-  }
+	.singleCard {
+		margin: 0.1rem;
+		max-width: 20rem;
+		img {
+			min-height: 12rem;
+			max-height: 12rem;
+			object-fit: cover;
+		}
+	}
 }
 </style>

@@ -9,6 +9,11 @@ export default [
 		name: "CreateCity",
 		component: () => import("../../views/Cities/Create/AddCity.vue"),
 	},
+	{
+		path: "/view/:id",
+		name: "ViewCity",
+		component: () => import("../../views/Cities/ViewCity.vue"),
+	},
 	//General Details
 	{
 		path: "/gastronomy",
@@ -27,7 +32,7 @@ export default [
 	},
 	//City Details
 	{
-		path: "/cities/:name",
+		path: "/cities/:id",
 		name: "SingleCity",
 		component: () => import("../../views/Cities/Details/City.vue"),
 	},

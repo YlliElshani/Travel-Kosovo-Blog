@@ -3,121 +3,176 @@ import GastronomyModel from "../models/GastronomyModel";
 import ExperienceModel from "../models/ExperienceModel";
 import PlaceModel from "../models/PlaceModel";
 import updateCitySchema from "../validator/CityValidator/updateCitySchema";
+import FileServiceCity from "../services/FileServiceCity";
 
 export default {
-  list: async (req, res) => {
-    const list = await CityModel.find();
+	list: async (req, res) => {
+		const list = await CityModel.find();
 
-    return res.json(list);
-  },
-  get: async (req, res) => {
-    const name = req.params.name;
+		return res.json(list);
+	},
+	get: async (req, res) => {
+		const id = req.params.id;
 
-    const foundItem = await CityModel.findOne({ name: name });
+		const foundItem = await CityModel.findOne({ _id: id });
 
-    return res.json(foundItem);
-  },
-  post: async (req, res) => {
-    const city = await new CityModel(req.body);
+		return res.json(foundItem);
+	},
+	post: async (req, res) => {
+		const city = await new CityModel(req.body);
 
-    city.save();
+		city.save();
 
-    return res.json(city);
-  },
-  delete: async (req, res) => {
-    const { name } = req.params;
-    try {
-      const removeCity = await CityModel.deleteOne({ name: name });
-      return res.json(removeCity);
-    } catch (err) {
-      console.log(`Error: ${err}`);
-    }
-  },
-  put: async (req, res) => {
-    const city = req.body;
+		return res.json(city);
+	},
+	delete: async (req, res) => {
+		const { name } = req.params;
+		try {
+			const removeCity = await CityModel.deleteOne({ name: name });
+			return res.json(removeCity);
+		} catch (err) {
+			console.log(`Error: ${err}`);
+		}
+	},
+	put: async (req, res) => {
+		const city = req.body;
 
-    const validationResult = updateCitySchema.validate(city);
+		const validationResult = updateCitySchema.validate(city);
 
-    if (validationResult.error) {
-      return res.status(401).json({
-        message: "Validation failed while updating",
-        error: validationResult.error,
-      });
-    }
-    const updateCity = await CityModel.updateOne({ name: city.name }, city);
+		if (validationResult.error) {
+			return res.status(401).json({
+				message: "Validation failed while updating",
+				error: validationResult.error,
+			});
+		}
+		const updateCity = await CityModel.updateOne({ name: city.name }, city);
 
-    return res.json(updateCity);
-  },
-  getCitiesGastronomy: async (req, res) => {
-    const { cityId } = req.params;
+		return res.json(updateCity);
+	},
+	getCitiesGastronomy: async (req, res) => {
+		const { cityId } = req.params;
 
-    const city = await CityModel.findOne(cityId).populate("gastronomies");
+		const city = await CityModel.findOne(cityId).populate("gastronomies");
 
-    res.json(city.gastronomies);
-  },
-  AddCityGastronomy: async (req, res) => {
-    const { cityId } = req.params;
+		res.json(city.gastronomies);
+	},
+	AddCityGastronomy: async (req, res) => {
+		const { cityId } = req.params;
 
-    const newGastronomy = new GastronomyModel(req.body);
+		const newGastronomy = new GastronomyModel(req.body);
 
-    const city = await CityModel.findOne(cityId);
+		const city = await CityModel.findOne(cityId);
 
-    newGastronomy.city = city;
+		newGastronomy.city = city;
 
-    await newGastronomy.save();
+		await newGastronomy.save();
 
-    city.gastronomies.push(newGastronomy);
+		city.gastronomies.push(newGastronomy);
 
-    await city.save();
+		await city.save();
 
-    res.json(newGastronomy);
-  },
-  getCitiesExperience: async (req, res) => {
-    const { cityId } = req.params;
+		res.json(newGastronomy);
+	},
+	getCitiesExperience: async (req, res) => {
+		const { cityId } = req.params;
 
-    const city = await CityModel.findOne(cityId).populate("experiences");
+		const city = await CityModel.findOne(cityId).populate("experiences");
 
-    res.json(city.experiences);
-  },
-  AddCityExperience: async (req, res) => {
-    const { cityId } = req.params;
+		res.json(city.experiences);
+	},
+	AddCityExperience: async (req, res) => {
+		const { cityId } = req.params;
 
-    const newExperience = new ExperienceModel(req.body);
+		const newExperience = new ExperienceModel(req.body);
 
-    const city = await CityModel.findOne(cityId);
+		const city = await CityModel.findOne(cityId);
 
-    newExperience.city = city;
+		newExperience.city = city;
 
-    await newExperience.save();
+		await newExperience.save();
 
-    city.experiences.push(newExperience);
+		city.experiences.push(newExperience);
 
-    await city.save();
+		await city.save();
 
-    res.json(newExperience);
-  },
-  getCitiesPlace: async (req, res) => {
-    const { cityId } = req.params;
+		res.json(newExperience);
+	},
+	getCitiesPlace: async (req, res) => {
+		const { cityId } = req.params;
 
-    const city = await CityModel.findOne(cityId).populate("places");
+		const city = await CityModel.findOne(cityId).populate("places");
 
-    res.json(city.places);
-  },
-  AddCityPlace: async (req, res) => {
-    const { cityId } = req.params;
+		res.json(city.places);
+	},
+	AddCityPlace: async (req, res) => {
+		const { cityId } = req.params;
 
-    const newPlace = new PlaceModel(req.body);
+		const newPlace = new PlaceModel(req.body);
 
-    const city = await CityModel.findOne(cityId);
+		const city = await CityModel.findOne(cityId);
 
-    newPlace.city = city;
+		newPlace.city = city;
 
-    await newPlace.save();
+		await newPlace.save();
 
-    city.places.push(newPlace);
+		city.places.push(newPlace);
 
-    await city.save();
+		await city.save();
 
-    res.json(newPlace);
-  },
+		res.json(newPlace);
+	},
+	deleteFile: async (req, res) => {
+		const { cityId, filename } = req.params;
+
+		FileServiceCity.deleteFiles([filename]);
+
+		const cityData = await CityModel.findOne({ _id: cityId }, { files: 1 });
+
+		const updatedFilenames = cityData.files
+			.replace(`${filename};`, "")
+			.replace(filename, "");
+
+		await CityModel.updateOne(
+			{ _id: cityId },
+			{
+				files: updatedFilenames,
+			}
+		);
+
+		const updatedCity = await CityModel.findOne(
+			{ _id: cityId },
+			{
+				files: updatedFilenames,
+			}
+		);
+
+		return res.json(updatedCity);
+	},
+	uploadFile: async (req, res) => {
+		const { id } = req.params;
+
+		const receivedFiles = [req.files.file];
+
+		try {
+			const files = await FileServiceCity.uploadFiles(receivedFiles);
+
+			console.log("files - ", files);
+
+			const realEstate = await CityModel.find({ _id: id }, { files: 1 });
+			const oldFiles = realEstate.files;
+
+			const newFiles = `${oldFiles || ""}${oldFiles ? ";" : ""}${files}`;
+
+			await CityModel.updateOne({ _id: id }, [
+				{
+					$set: { files: newFiles },
+				},
+			]);
+
+			const updatedCity = await CityModel.find({ _id: id });
+			return res.json(updatedCity);
+		} catch (err) {
+			res.status(500).json({ err: err.toString() });
+		}
+	},
 };

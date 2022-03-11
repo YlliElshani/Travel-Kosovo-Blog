@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const createCity = async (PostBody) => {
+const removeFileCity = async (id, file) => {
 	// const token = await getAuth().currentUser.getIdToken();
 	const apiCaller = axios.create({
 		baseURL: "http://localhost:1000/",
 	});
-	const { data } = await apiCaller.post("/cities/create", PostBody, {
+	return apiCaller.put(`/cities/${id}/removeFile/${file.name}`, {
 		// authorization: `Bearer ${token}`,
 	});
 
-	return data;
+	// return data;
 };
 
-export default createCity;
+export default removeFileCity;
