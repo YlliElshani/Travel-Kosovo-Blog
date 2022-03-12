@@ -7,23 +7,24 @@
 				class="card-img-top"
 				style="max-height: 150px"
 			/>
-			<div class="card-body">
-				<h5 class="card-title">{{ city.name }}</h5>
-				<h5 class="card-title">{{ city.description }}</h5>
-				<h5 class="card-title">{{ city.rating }}</h5>
-				<!-- <p class="card-text">Square meters: {{ realEstate.squareMeters }}</p> -->
-				<router-link
-					class="btn btn-primary"
+			<div class="card">
+				<h5 class="card-header">{{ city.name }}</h5>
+				<h5 class="card-body">{{ city.description }}</h5>
+				<h5 class="card-footer">{{ city.rating }}</h5>		
+				<div class="btns">
+					<router-link
+					class="btnLink"
 					:to="{ name: 'SingleCity', params: { id: city._id } }"
 					>View</router-link
 				>
 				<button
 					type="button"
-					class="btn btn-danger ml-2"
+					class="btnDel"
 					@click.prevent="removeCity(city.name)"
 				>
 					Delete
 				</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -60,62 +61,9 @@ export default {
 	}
 }
 
-.posts {
-	display: flex;
-	flex-direction: row;
-	padding: 15px;
-	margin-right: 5%;
-	margin-left: 5%;
-	width: 90%;
-	justify-content: space-between;
-	flex-wrap: wrap;
+	.card{
+		padding: 20px;
 
-	@media (max-width: 700px) {
-		.posts {
-			flex-direction: row;
-		}
-
-		img {
-			display: none;
-		}
-
-		h5 {
-			margin-left: 5%;
-			margin-right: 3%;
-			padding: 10px;
-			text-align: center !important;
-			width: 100% !important;
-		}
-	}
-
-	img {
-		width: 35%;
-		height: 100%;
-	}
-
-	h5 {
-		margin-left: 5%;
-		margin-right: 3%;
-		font-size: 28px;
-		padding: 10px;
-		text-align: center;
-		width: 15%;
-	}
-
-	p {
-		margin-top: 3%;
-		font-size: 23px;
-		margin-bottom: 3%;
-	}
-
-	@media (max-width: 700px) {
-		.btns {
-			width: 190% !important;
-			.link {
-				width: 150%;
-			}
-		}
-	}
 
 	.btns {
 		display: flex;
@@ -124,8 +72,10 @@ export default {
 		padding: 15px;
 		width: 30%;
 
-		.link {
+		.btnLink {
 			padding: 15px;
+			text-decoration: none;
+			color: black;
 		}
 
 		button {
@@ -141,6 +91,11 @@ export default {
 			margin-top: 3%;
 			margin-left: 5%;
 		}
+
+		li:first-child{
+			font-size: 30px;
+		}
 	}
-}
+	}
+	
 </style>

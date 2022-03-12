@@ -1,7 +1,4 @@
 <template>
-	<!--<div class="container d-flex justify-content-center aboutUs">
-    <h1>About Us</h1>    
-  </div>-->
 	<div id="main">
 		<div class="container">
 			<section class="about-container container">

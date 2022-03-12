@@ -1,59 +1,7 @@
-<!--<template>
-  <div class="container citiesContainer">
-    <h1 style="text-align: center">Cities</h1>
-    <div>
-      <router-link :to="{ name: 'CreateCity' }">
-        <b-button variant="primary">Add City</b-button>
-      </router-link>
-    </div>
-    <div v-if="loadingCities">
-      <loader />
-    </div>
-    <div v-else class="cardsWrapper">
-      <b-card
-        v-for="city in cities"
-        :key="city.name"
-        :title="city.name"
-        img-alt="Image"
-        img-top
-        tag="article"
-        class="singleCard"
-      >
-        <b-card-text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-          <b-form-rating
-            id="rating-sm"
-            :value="city.rating"
-            variant="warning"
-            readonly
-            size="lg"
-          ></b-form-rating>
-        </b-card-text>
-
-        <router-link :to="{ name: 'SingleCity', params: { name: city.name } }"
-          ><b-button variant="primary"
-            >Visit {{ city.name }}</b-button
-          ></router-link
-        >
-        <div>
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click.prevent="removeCity(city.name)"
-          >
-            Delete
-          </button>
-        </div>
-      </b-card>
-    </div>
-  </div>
-</template>-->
-
 <template>
 	<section>
 		<div class="container">
-			<router-link :to="{ name: 'CreateCity' }">
+			<router-link v-if="isAdmin" :to="{ name: 'CreateCity' }">
 				<b-button variant="primary">Add City</b-button>
 			</router-link>
 			<div class="row">
@@ -64,11 +12,9 @@
 </template>
 
 <script>
-// import loader from "../../components/Loading.vue";
 import CardCity from "../../components/CardCity.vue";
 import { mapGetters } from "vuex";
 import getCityList from "../../utility/City/getCityList";
-// import deleteCity from "../../utility/City/deleteCity";
 export default {
 	data() {
 		return {};
@@ -78,12 +24,20 @@ export default {
 	},
 	created() {
 		this.fetchCity();
-		// this.setCity();
 	},
 	computed: {
 		loadingCities() {
 			return this.$store.state.cities.loading;
 		},
+
+		isAdmin() {
+		return this.$store.state.users.isAdmin;
+		},
+
+		isLoggedIn(){
+			return this.$store.state.users.isLoggedIn;
+		},
+
 		...mapGetters({
 			cityList: "cityList",
 		}),
@@ -94,21 +48,15 @@ export default {
 	methods: {
 		async fetchCity() {
 			const result = await getCityList();
-			// console.log(result);
 			this.$store.dispatch("fetchCity", result);
 		},
 		removeCity(cityName) {
 			this.$store.dispatch("removeCity", cityName);
 		},
-		// setCity() {
-		// 	this.$store.dispatch("setCity");
-		// },
 		generateRating() {
 			return Math.floor(Math.random() * (5 - 1 + 1)) + 1; //multiply to generate random number between 0, 10
 		},
-		// async removeCity(id) {
-		// 	await deleteCity(id);
-		// },
+
 	},
 	name: "Cities",
 };

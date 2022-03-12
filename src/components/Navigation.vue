@@ -71,7 +71,6 @@
           </div>
         </div>
       </div>
-      <div></div>
     </nav>
     <menuIcon class="menu-icon" @click="toggleMobileNav" v-show="mobile" />
     <transition name="mobile-nav">
@@ -79,12 +78,15 @@
         <router-link class="link" :to="{ name: 'Home' }">
           Home
         </router-link>
-        <!-- <router-link class="link" :to="{ name: 'Blogs' }">
-          Blogs
-        </router-link> -->
-        <router-link class="link" to="#">
+         <router-link v-if="isAdmin" class="link" :to="{ name: 'Cities' }">
+            Cities
+          </router-link>
+        <router-link class="link"  :to="{ name: 'Posts' }">
           Create Post
         </router-link>
+         <router-link class="link" :to="{ name: 'AboutUs' }">
+            About Us
+          </router-link>
         <router-link
           v-if="!user.profileId"
           class="link"
@@ -342,6 +344,7 @@ nav {
   background-color: #303030;
   top: 0;
   left: 0;
+  z-index: 3;
 
   .link {
     padding: 15px 0;

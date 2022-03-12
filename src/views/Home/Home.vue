@@ -53,6 +53,11 @@ export default {
     user() {
       return this.$store.state.user;
     },
+
+  //need to fix this
+    isLoggedIn(){
+      return this.$store.state.user.isLoggedIn;
+    }
   },
 };
 </script>
