@@ -14,7 +14,6 @@
 <script>
 import CardCity from "../../components/CardCity.vue";
 import { mapGetters } from "vuex";
-import getCityList from "../../utility/City/getCityList";
 export default {
   data() {
     return {};
@@ -23,7 +22,7 @@ export default {
     CardCity,
   },
   created() {
-    this.fetchCity();
+    this.getCities();
   },
   computed: {
     loadingCities() {
@@ -46,9 +45,8 @@ export default {
     },
   },
   methods: {
-    async fetchCity() {
-      const result = await getCityList();
-      this.$store.dispatch("fetchCity", result);
+    getCities() {
+      this.$store.dispatch("getCities");
     },
     removeCity(cityName) {
       this.$store.dispatch("removeCity", cityName);

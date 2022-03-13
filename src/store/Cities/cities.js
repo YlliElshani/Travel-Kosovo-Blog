@@ -41,10 +41,7 @@ export default {
     },
   },
   actions: {
-    // fetchCity({ commit }, list) {
-    // 	commit("SET_LIST", list);
-    //  },
-    fetchCity({ commit }) {
+    getCities({ commit }) {
       commit("SET_LOADING", true);
       return new Promise((resolve, reject) => {
         api("localhost")
