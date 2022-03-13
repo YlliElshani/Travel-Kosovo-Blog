@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../../firebase/firebaseInit";
+//import getAuth from "../../firebase/firebaseInit";
 
 export default {
   state: {
@@ -55,21 +56,16 @@ export default {
     SIGN_USER_OUT(state) {
       state.currentUser.profileId = null;
     },
+    SET_USERS(state, payload) {
+      state.users = payload;
+    },
   },
   actions: {
     fetchUser({ commit }, user) {
       commit("SET_USER", user ? user : null);
       commit("SET_LOGGED_IN", user !== null);
     },
-    // 	async updateUserSettings({ commit, state }) {
-    // 		const dataBase = await db.collection("users").doc(state.profileId);
-    // 		await dataBase.update({
-    // 			firstName: state.profileFirstName,
-    // 			lastName: state.profileLastName,
-    // 			username: state.profileUserName,
-    // 		});
-    // 		commit("setProfileInitials");
-    // 	},
+
     async getCurrentUser({ commit }) {
       console.log('getting cr user')
       commit("SET_LOADING", true);
@@ -85,6 +81,17 @@ export default {
       // const token = await user.getIdTokenResult();
       // const admin = await token.claims.admin;
       // commit("setProfileAdmin", admin);
+    },
+
+    async getAllUsers({ commit }) {
+      commit("SET_LOADING", true);
+      const dataBase = await db
+        .collection("users")
+      const dbResults = await dataBase.get();
+      commit("SET_PROFILE_INFO", dbResults);
+      commit("SET_LOGGED_IN", true);
+      commit("SET_ADMIN", dbResults.data().roles);
+      commit("SET_LOADING", false);
     },
     async updateUserInfo({ commit, state }, updatedUser) {
       commit("SET_LOADING", true);
