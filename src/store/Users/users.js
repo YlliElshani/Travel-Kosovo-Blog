@@ -71,6 +71,7 @@ export default {
     // 		commit("setProfileInitials");
     // 	},
     async getCurrentUser({ commit }) {
+      console.log('getting cr user')
       commit("SET_LOADING", true);
       const dataBase = await db
         .collection("users")
@@ -85,18 +86,30 @@ export default {
       // const admin = await token.claims.admin;
       // commit("setProfileAdmin", admin);
     },
+    async updateUserInfo({ commit, state }, updatedUser) {
+      commit("SET_LOADING", true);
+      const dataBase = await db.collection("users").doc(updatedUser.profileId);
+      console.log(dataBase)
+      await dataBase.update({
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        username: updatedUser.username,
+      });
+      state.getCurrentUser
+      commit("SET_LOADING", false);
+    },
     signUserOut({ commit }) {
       commit("SET_LOADING", true);
       commit("SIGN_USER_OUT");
       commit("SET_LOADING", false);
     },
-    // setProfileInfo(state, doc) {
-    //   state.currentUser.profileId = doc.id;
-    //   state.currentUser.profileEmail = doc.data().email;
-    //   state.currentUser.profileFirstName = doc.data().firstName;
-    //   state.currentUser.profileLastName = doc.data().lastName;
-    //   state.currentUser.profileUserName = doc.data().username;
-    //   console.log(state.currentUser);
-    // },
+    setProfileInfo(state, doc) {
+      state.currentUser.profileId = doc.id;
+      state.currentUser.profileEmail = doc.data().email;
+      state.currentUser.profileFirstName = doc.data().firstName;
+      state.currentUser.profileLastName = doc.data().lastName;
+      state.currentUser.profileUserName = doc.data().username;
+      console.log(state.currentUser);
+    },
   },
 };

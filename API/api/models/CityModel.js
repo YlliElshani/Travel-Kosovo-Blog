@@ -4,6 +4,7 @@ const schema = mongoose.Schema({
 	description: String,
 	imgPath: String,
 	name: String,
+	files: String,
 	rating: Number,
 	gastronomies: [
 		{
