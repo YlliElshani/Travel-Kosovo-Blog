@@ -1,5 +1,5 @@
 <template>
-  <body :class="mode">
+  <body>
     <nav class="container">
       <div class="branding">
         <router-link class="header" :to="{ name: 'Home' }"
@@ -69,7 +69,7 @@
               </div>
               <div class="darkmodeset">
                 <label>Change theme</label>
-                <Toggle :mode="mode" @toggle="$emit('toggle')" />       
+                <Toggle mode="light" @toggle="$emit('toggle')" />       
               </div>
             </div>
           </div>

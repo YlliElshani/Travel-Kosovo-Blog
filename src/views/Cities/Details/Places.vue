@@ -44,7 +44,7 @@
 					<div class="col col-lg-5 col-12 cityTopPlacesBox">
 						<div class="container boxContainerImg">
 							<img
-								:src="require('../../../assets/blogPhotos/gastronomy1.jpg')"
+								:src="require('../../../assets/blogPhotos/gastronomy3.jpg')"
 								:alt="currentCity.id"
 								:onerror="replaceByDefault"
 								class="topPlacesImg"

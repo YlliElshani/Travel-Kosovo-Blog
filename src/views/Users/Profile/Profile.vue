@@ -58,11 +58,6 @@ export default {
       mode:"light"
     };
   },
-
-  created(){
-    window.addEventListener('keyup', this.keyPress) 
-  },
-
   methods: {
     closeModal() {
       this.modalActive = !this.modalActive;
@@ -101,6 +96,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener('keyup', this.keyPress) 
     this.firstName = this.currentUser.profileFirstName;
     this.lastName = this.currentUser.profileLastName;
     this.username = this.currentUser.profileUserName;

@@ -192,7 +192,7 @@ export default {
 			console.log(payload);
 			return new Promise((resolve, reject) => {
 				api("localhost")
-					.post(`/cities/${payload.id}/place`, payload.gastronomy)
+					.post(`/cities/${payload.id}/places`, payload.place)
 					.then((response) => {
 						resolve(response);
 					})

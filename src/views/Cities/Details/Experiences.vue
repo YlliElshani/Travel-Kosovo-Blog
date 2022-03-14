@@ -13,14 +13,14 @@
     </div>
     <div class="descriptionContainer">
       <h2>
-        All of {{ id }}'s experiences are tailored to each individual guest –
-        ensuring you’ll remember them for a lifetime. From skiing to wild
-        truffle hunting, the surrounding landscape offers an array of activities
-        for all four seasons.
+        All of {{ cityName }}'s experiences are tailored to each individual
+        guest – ensuring you’ll remember them for a lifetime. From skiing to
+        wild truffle hunting, the surrounding landscape offers an array of
+        activities for all four seasons.
       </h2>
     </div>
     <div class="container-fluid citySubmenu">
-      <h2>Visit {{ id }}</h2>
+      <h2>Visit {{ cityName }}</h2>
     </div>
     <div class="cityMainContent">
       <div class="cityTopPlacesContainer">
@@ -76,14 +76,14 @@ export default {
     return {
       imgError: false,
       id: null,
+      cityName: null,
       currentCity: {},
     };
   },
   created() {
     this.id = this.$route.params.id;
-    this.currentCity = this.$store.state.cities.find(
-      (city) => city.name == this.id
-    );
+    this.currentCity = this.$store.state.cities.city;
+    this.cityName = this.$store.state.cities.city.name;
   },
   computed: {},
   methods: {

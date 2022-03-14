@@ -38,7 +38,7 @@ export default {
         url: `http://localhost:1000/cities/${this.cityId}/uploadFile`,
         method: "put",
         thumbnailWidth: 150,
-        maxFilesize: 3,
+        maxFilesize: 15,
       },
     };
   },
