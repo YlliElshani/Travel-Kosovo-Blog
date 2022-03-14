@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<body>
 		<div class="container">
 			<router-link :to="{ name: 'CreatePost' }">
 				<b-button variant="primary">Add Post</b-button>
@@ -8,7 +8,7 @@
 				<Card v-for="entry in postList" :key="entry._id" :post="entry" />
 			</div>
 		</div>
-	</section>
+	</body>
 </template>
 
 <script>

@@ -1,5 +1,6 @@
 <template>
-  <div class="container home">
+<body>
+<div class="container">
     <div class="instruction">
       <p>
         Zgjedhni qytetin tuaj ne harte dhe shikoni bloget per te!
@@ -36,6 +37,7 @@
       </div>
     </div>
   </div>
+</body>
 </template>
 
 <script>
@@ -59,10 +61,12 @@ export default {
       return this.$store.state.user.isLoggedIn;
     }
   },
+   props: ['mode']
 };
 </script>
 
 <style lang="scss" scoped>
+
 .instruction {
   width: 100%;
   padding: 15px;

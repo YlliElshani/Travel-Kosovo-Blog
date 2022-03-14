@@ -1,8 +1,5 @@
 <template>
-  <!--<div class="container d-flex justify-content-center aboutUs">
-    <h1>About Us</h1>    
-  </div>-->
-  <div id="main">
+  <body id="main">
     <div class="container">
       <section class="about-container container">
         <div class="about-sections">
@@ -54,7 +51,7 @@
         </div>
       </section>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -74,11 +71,16 @@ export default {
 </script>
 
 <style scoped>
+.dark div{
+  background-color:#303030;
+}
+
 .container {
   width: 95%;
   height: 70%;
   margin: auto;
   overflow: hidden;
+
 }
 .offer-image {
   height: 300px;

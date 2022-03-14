@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <body>
     <h1>Admin Dashboard</h1>
-  </div>
+  </body>
 </template>
 
 <script>

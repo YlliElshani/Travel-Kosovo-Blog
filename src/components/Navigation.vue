@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <body :class="mode">
     <nav class="container">
       <div class="branding">
         <router-link class="header" :to="{ name: 'Home' }"
@@ -67,6 +67,10 @@
                 <signOutIcon class="icon" />
                 <p>Sign out</p>
               </div>
+              <div class="darkmodeset">
+                <label>Change theme</label>
+                <Toggle :mode="mode" @toggle="$emit('toggle')" />       
+              </div>
             </div>
           </div>
         </div>
@@ -99,7 +103,7 @@
         </router-link>
       </ul>
     </transition>
-  </header>
+  </body>
 </template>
 
 <script>
@@ -108,6 +112,8 @@ import userIcon from "../assets/Icons/user-alt-light.svg";
 import Logo from "../assets/Logo.svg";
 import adminIcon from "../assets/Icons/user-crown-light.svg";
 import signOutIcon from "../assets/Icons/sign-out-alt-regular.svg";
+import Toggle from "../components/Toggle.vue"
+
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -120,6 +126,7 @@ export default {
     adminIcon,
     signOutIcon,
     Logo,
+    Toggle
   },
 
   data() {
@@ -174,10 +181,16 @@ export default {
       window.location.reload();
     },
   },
+
 };
 </script>
 
 <style lang="scss" scoped>
+
+.dark nav{
+  border-bottom: 3px solid white !important;
+}
+
 header {
   background-color: white;
   padding: 0 25px;
@@ -204,6 +217,7 @@ header {
 nav {
   display: flex;
   padding: 25px 0;
+  border-bottom: 3px solid #303030 !important;
 
   .branding {
     display: flex;
@@ -216,6 +230,7 @@ nav {
       color: black;
     }
   }
+
 
   .nav-links {
     position: relative;

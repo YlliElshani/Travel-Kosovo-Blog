@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-4 mt-4 col-md-6 col-sm-12">
+	<body class="col-lg-4 mt-4 col-md-6 col-sm-12">
 		<div class="card">
 			<img
 				v-if="src"
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</body>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-	<div id="main">
+	<body id="main">
 		<div class="container">
 			<section class="about-container container">
 				<div class="about-sections">
@@ -51,7 +51,7 @@
 				</div>
 			</section>
 		</div>
-	</div>
+	</body>
 </template>
 
 <script>

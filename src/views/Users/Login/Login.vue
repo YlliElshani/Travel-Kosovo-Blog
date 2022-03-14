@@ -1,5 +1,5 @@
 <template>
-  <div class="form-wrap">
+  <body class="form-wrap">
     <form class="login">
       <p class="login-register">
         Don't have an account?
@@ -33,7 +33,7 @@
       </button>
     </form>
     <div class="background"></div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -98,6 +98,14 @@ export default {
 </script>
 
 <style lang="scss">
+.dark a{
+  color: white !important;
+  font-size: 20px !important;
+}
+
+.dark button{
+  background-color: white;
+}
 .form-wrap {
   overflow: hidden;
   display: flex;

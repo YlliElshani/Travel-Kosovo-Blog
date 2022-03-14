@@ -1,5 +1,5 @@
 <template>
-  <div class="span5">
+  <body class="span5">
     <div
       class="d-flex justify-content-center"
       style="margin-left: 50px; margin-top: 20px"
@@ -394,7 +394,7 @@
         />
       </map>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>

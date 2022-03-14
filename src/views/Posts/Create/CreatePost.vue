@@ -1,5 +1,5 @@
 <template>
-	<div class="createPost">
+	<body class="createPost">
 		<form action="" @submit.prevent="addPost">
 			<div class="container">
 					<input
@@ -12,7 +12,7 @@
 					<button type="submit">Continue</button>
 			</div>
 		</form>
-	</div>
+	</body>
 </template>
 
 <script>

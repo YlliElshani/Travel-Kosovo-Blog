@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <body class="footer">
     <hr>
     <ul class="footer-ul">
       <router-link class="logoS" :to="{ name: 'Home' }"><Logo /></router-link>
@@ -17,7 +17,7 @@
         <li><a href="https://www.instagram.com/"><img src="../assets/Icons/reddit.png"></a></li>
         <li><a href="https://www.reddit.com/"><img src="../assets/Icons/twitter.png"></a></li>
     </ul>
-</div>
+</body>
 </template>
 
 <style>

@@ -1,5 +1,5 @@
 <template>
-<div class="reset-password">
+<body class="reset-password">
     <Modal v-if="modalActive" :modalMessage="modalMessage" v-on:close-modal="closeModal"/>
     <Loading v-if="loading"/>
       <div class="form-wrap">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-</div>
+</body>
 </template>
 
 <script>

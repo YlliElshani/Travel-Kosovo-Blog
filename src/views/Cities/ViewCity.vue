@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<body>
 		<div v-if="this.city" class="cityItems">
 				<div>
 					<label>City Name:</label>
@@ -23,7 +23,7 @@
 					</div>
 				</div>
 		</div>
-	</section>
+	</body>
 </template>
 
 <script>

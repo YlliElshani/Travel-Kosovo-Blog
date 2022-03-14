@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<body>
 		<div class="container">
 			<router-link v-if="isAdmin" :to="{ name: 'CreateCity' }">
 				<b-button variant="primary">Add City</b-button>
@@ -8,7 +8,7 @@
 				<CardCity v-for="entry in cityList" :key="entry._id" :city="entry" />
 			</div>
 		</div>
-	</section>
+	</body>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="form-wrap">
+  <body class="form-wrap">
     <form class="register">
       <p class="login-register">
         Already have an Account?
@@ -42,7 +42,7 @@
       </button>
     </form>
     <div class="background"></div>
-  </div>
+  </body>
 </template>
 
 <script>

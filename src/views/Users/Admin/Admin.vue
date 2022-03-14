@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <body class="admin">
     <div class="container-fluid p-0">
       <div class="admin-tabs ml-2">
         <v-tabs>
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>

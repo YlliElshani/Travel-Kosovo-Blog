@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <body class="app" :class="mode">
     <transition name="slide" mode="out-in">
       <div v-if="isLoading || isFetching" id="loadedClass">
         <div class="logoSet">
@@ -9,16 +9,15 @@
         </div>
       </div>
     </transition>
-    <app-navigation v-if="!isLoading && !isFetching"></app-navigation>
+    <app-navigation v-if="!isLoading && !isFetching" :mode="mode" @toggle="toggle"></app-navigation>
     <router-view v-if="!isLoading && !isFetching"></router-view>
     <app-footer v-if="!isLoading && !isFetching"></app-footer>
-  </div>
+  </body>
 </template>
 
 <script>
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
-// import firebase from "firebase/app";
 import "firebase/auth";
 import Logo from "../src/assets/Logo.svg";
 
@@ -33,6 +32,7 @@ export default {
     return {
       loading: true,
       navigation: null,
+      mode:"light"
     };
   },
   computed: {
@@ -48,6 +48,8 @@ export default {
     setTimeout(() => {
       this.loading = false;
     }, 2000);
+
+    window.addEventListener('keyup', this.keyPress)
   },
   mounted() {},
   methods: {
@@ -62,6 +64,19 @@ export default {
       }
       this.navigation = false;
     },
+
+     keyPress (e) {
+      if (e.key === 't') {
+        this.toggle()
+      }
+    },
+    toggle () {
+      if (this.mode === "dark") {
+        this.mode = "light"
+      } else {
+        this.mode = "dark"
+      }
+    }
   },
   watch: {
     $route() {
@@ -74,6 +89,66 @@ export default {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 @import "./assets/sass/_variables.scss";
+
+  .dark a{
+    color: #fff;
+  }
+
+  .dark hr{
+    border: 3px solid white;
+  }
+
+  .dark li{
+    color: white !important;
+  }
+
+.dark body{
+  background-color: #303030 !important;
+}
+
+.dark .container{
+  background-color: #303030 !important;
+}
+
+.dark div{
+  background-color: #303030;
+}
+
+.dark template{
+  background-color: #303030;
+}
+
+.dark p{
+  color: white !important;
+}
+
+.dark h1{
+  color:white !important;
+}
+
+.dark h2{
+  color: white !important;
+}
+
+.dark h3{
+  color: white !important;
+}
+
+.dark h4{
+  color: white !important;
+}
+
+.dark h5{
+  color:white !important;
+}
+
+.dark header{
+  background-color: #303030 !important;
+}
+
+.dark body{
+  background-color: #303030;
+}
 
 * {
   margin: 0;

@@ -1,11 +1,11 @@
 <template>
-  <div class="profile">
+  <body class="profile" :class="mode">
     <Modal
       v-if="modalActive"
       :modalMessage="modalMessage"
       v-on:close-modal="closeModal"
     />
-    <div class="container">
+    <div class="container" :class="mode">
       <h2>Account Settings</h2>
       <button @click="getCurrentUser">GET STATE</button>
       <div class="profile-info">
@@ -33,7 +33,7 @@
         <button @click="updateProfile">Save Changes</button>
       </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -52,8 +52,14 @@ export default {
     return {
       modalMessage: "Changes were saved",
       modalActive: null,
+      mode:"light"
     };
   },
+
+  created(){
+    window.addEventListener('keyup', this.keyPress) 
+  },
+
   methods: {
     closeModal() {
       this.modalActive = !this.modalActive;
@@ -65,6 +71,18 @@ export default {
       this.$store.state.users.dispatch("updateUserSettings");
       this.modalActive = !this.modalActive;
     },
+    keyPress (e) {
+      if (e.key === 't') {
+        this.toggle()
+      }
+    },
+    toggle () {
+      if (this.mode === "dark") {
+        this.mode = "light"
+      } else {
+        this.mode = "dark"
+      }
+    }
   },
   computed: {
     currentUser() {
@@ -102,6 +120,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dark input{
+  background: #303030;
+}
+
+.dark label{
+  color: #f1f1f1;
+  font-size: 20px !important;
+}
+
+.dark div{
+    background: #303030 !important; 
+}
+
 .profile {
   .container {
     max-width: 1000px;

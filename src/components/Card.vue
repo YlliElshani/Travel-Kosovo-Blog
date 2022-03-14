@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<body class="container">
 		<h2>
 			Our blogposts!
 		</h2>
@@ -23,7 +23,7 @@
 			</div>
 			<hr />
 		</div>
-	</div>
+	</body>
 </template>
 
 <script>
