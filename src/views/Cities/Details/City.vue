@@ -7,11 +7,8 @@
       <div class="cityHero">
         <div class="imgShadow">
           <img
-            :src="
-              require('../../../assets/blogPhotos/' +
-                this.currentCity.imgPath.toLowerCase() +
-                '.jpg')
-            "
+            v-if="src"
+            :src="src"
             :alt="this.currentCity.id"
             :onerror="replaceByDefault"
             class="cityMainImage"
@@ -42,11 +39,8 @@
           <div class="col col-lg-4 col-12 cityTopPlacesBox">
             <div class="container boxContainerImg">
               <img
-                :src="
-                  require('../../../assets/blogPhotos/' +
-                    this.currentCity.imgPath.toLowerCase() +
-                    '.jpg')
-                "
+                :v-if="src"
+                :src="src"
                 :alt="this.currentCity.id"
                 :onerror="replaceByDefault"
                 class="topPlacesImg"
@@ -81,7 +75,12 @@
         </div>
         <div
           class="col col-lg-4 col-12 cityOptions places"
-          @click="$router.push({ name: 'CityPlaces' })"
+          @click="
+            $router.push({
+              name: 'CityGastronomy',
+              params: { id: currentCity._id },
+            })
+          "
         >
           <h1>Places</h1>
         </div>
@@ -103,12 +102,17 @@ export default {
   data() {
     return {
       imgError: false,
-      name: null,
+      id: null,
     };
   },
   computed: {
     loadingCities() {
       return this.$store.state.cities.loading;
+    },
+    src() {
+      const filename = this.currentCity.files?.split(";")[0];
+
+      return filename ? `http://localhost:1000/static/${filename}` : null;
     },
     loading() {
       return this.$store.state.cities.fetchingCity;
@@ -121,12 +125,12 @@ export default {
     },
   },
   created() {
-    this.name = this.$route.params.name;
-    this.getCurrentCity(this.name);
+    this.id = this.$route.params.id;
+    this.getCurrentCity(this.id);
   },
   methods: {
-    getCurrentCity(cityName) {
-      this.$store.dispatch("getCity", cityName);
+    getCurrentCity(cityId) {
+      this.$store.dispatch("getCity", cityId);
     },
     replaceByDefault(e) {
       e.target.src = this.defaultImg;

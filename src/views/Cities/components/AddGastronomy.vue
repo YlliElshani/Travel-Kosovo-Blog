@@ -1,66 +1,51 @@
 <template>
-  <body class="createPost">
-    <form action="" @submit.prevent="addCity">
+  <div class="createPost">
+    <form action="" @submit.prevent="addGastronomy">
       <div class="container">
-        <input
-          required
-          type="text"
-          placeholder="Enter city name"
-          v-model="city.name"
-        />
-        <textarea v-model="city.description" />
-        <input
-          required
-          type="number"
-          placeholder="Enter city rating"
-          v-model="city.rating"
-        />
-        <button type="submit">Continue</button>
+        <input required type="text" placeholder="Name" v-model="name" />
+        <textarea placeholder="Description..." v-model="description" />
+        <input required placeholder="Location" v-model="location" />
+        <button type="submit">Submit</button>
       </div>
     </form>
-  </body>
+  </div>
 </template>
 
 <script>
 import "firebase/auth";
-// import db from "../../../firebase/firebaseInit";
-import createCity from "../../../utility/City/createCity";
 
 export default {
+  name: "CityGastronomyForm",
   data() {
     return {
-      city: {
-        description: "",
-        imgPath: "",
-        name: "",
-        rating: null,
-      },
+      name: "",
+      description: "",
+      location: "",
+      id: null,
     };
   },
+  created() {
+    this.id = this.$route.params.id;
+  },
   methods: {
-    async addCity() {
-      try {
-        const newCity = await createCity({
-          ...this.city,
+    addGastronomy() {
+      const gastronomy = {
+        name: this.name,
+        description: this.description,
+        location: this.location,
+      };
+      this.$store
+        .dispatch("addGastronomy", { gastronomy: gastronomy, id: this.id })
+        .then(() => {
+          this.$store.dispatch("getCity", this.id);
+          this.$router.push({ name: "Cities" });
         });
-        this.$router.push({
-          name: "ViewCity",
-          params: { id: newCity._id },
-        });
-      } catch (err) {
-        console.log(`Errori te AddCity ${err}`);
-      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
-.dark body{
-  background-color: #303030 !important;
-}
-
 @media (max-width: 900px) {
   .createPost {
     justify-content: center !important;

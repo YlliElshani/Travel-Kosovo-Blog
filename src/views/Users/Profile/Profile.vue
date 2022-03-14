@@ -7,10 +7,9 @@
     />
     <div class="container" :class="mode">
       <h2>Account Settings</h2>
-      <button @click="getCurrentUser">GET STATE</button>
       <div class="profile-info">
         <div class="initials">{{ $store.state.profileInitials }}</div>
-        <div class="admin-badge">
+        <div v-if="isAdmin" class="admin-badge">
           <adminIcon class="icon" />
           <span>Admin</span>
         </div>
@@ -50,6 +49,10 @@ export default {
 
   data() {
     return {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
       modalMessage: "Changes were saved",
       modalActive: null,
       mode:"light"
@@ -64,11 +67,16 @@ export default {
     closeModal() {
       this.modalActive = !this.modalActive;
     },
-    getCurrentUser() {
-      console.log(this.$store.state);
-    },
     updateProfile() {
-      this.$store.state.users.dispatch("updateUserSettings");
+      const updatedUser = {
+        profileId: this.currentUser.profileId,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        username: this.username,
+      };
+      this.$store.dispatch("updateUserInfo", updatedUser).then(() => {
+        this.$store.dispatch("getCurrentUser");
+      });
       this.modalActive = !this.modalActive;
     },
     keyPress (e) {
@@ -85,36 +93,18 @@ export default {
     }
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     currentUser() {
       return this.$store.state.users.currentUser;
     },
-    firstName: {
-      get() {
-        return this.$store.state.users.profileFirstName;
-      },
-      set(payload) {
-        this.$store.commit("changeFirstName", payload);
-      },
-    },
-    lastName: {
-      get() {
-        return this.$store.state.users.profileLastName;
-      },
-      set(payload) {
-        this.$store.commit("changeLastName", payload);
-      },
-    },
-    username: {
-      get() {
-        return this.$store.state.users.profileUsername;
-      },
-      set(payload) {
-        this.$store.commit("changeUsername", payload);
-      },
-    },
-    email() {
-      return this.$store.state.users.profileEmail;
-    },
+  },
+  created() {
+    this.firstName = this.currentUser.profileFirstName;
+    this.lastName = this.currentUser.profileLastName;
+    this.username = this.currentUser.profileUserName;
+    this.email = this.currentUser.profileEmail;
   },
 };
 </script>

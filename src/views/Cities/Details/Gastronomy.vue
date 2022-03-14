@@ -1,139 +1,136 @@
 <template>
-  <div class="container-fluid cityContainer">
-    <div class="cityHero">
-      <div class="imgShadow">
-        <img
-          :src="require('../../../assets/blogPhotos/gastronomyFull.jpg')"
-          :alt="this.currentCity.id"
-          :onerror="replaceByDefault"
-          class="cityMainImage"
-        />
+  <div class="city-container">
+    <div v-if="loading">
+      <Loading />
+    </div>
+    <div class="container-fluid cityContainer">
+      <div class="cityHero">
+        <div class="imgShadow">
+          <img
+            :src="require('../../../assets/blogPhotos/gastronomyFull.jpg')"
+            :alt="currentCity._id"
+            :onerror="replaceByDefault"
+            class="cityMainImage"
+          />
+        </div>
+        <h1 class="cityName">Gastronomy</h1>
       </div>
-      <h1 class="cityName">Gastronomy</h1>
-    </div>
-    <div class="descriptionContainer">
-      <h2>
-        Experience modern local dishes, refined beverages and breathtaking views
-        from {{ id }}'s beautiful restaurants, lounges and lobbies.
-      </h2>
-    </div>
-    <div class="container-fluid citySubmenu">
-      <h2>Visit {{ id }}</h2>
-    </div>
-    <div class="cityMainContent">
-      <div class="cityTopPlacesContainer">
-        <!-- 1 -->
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainer">
-            <h2>{{ id }}'s top Restaurants and Bars!</h2>
-            <hr />
-            <h4>
-              Experience modern local dishes and breathtaking views at our
-              favourite restaurant, {{ id }}'s best restaurant, where the menu
-              is created by executive and professional chefs.
-            </h4>
-            <p>Location: {{ id }}</p>
-            <button class="btn seeMoreBtn">See More</button>
+      <div class="descriptionContainer">
+        <h2>
+          Experience modern local dishes, refined beverages and breathtaking
+          views from {{ cityName }}'s beautiful restaurants, lounges and
+          lobbies.
+        </h2>
+      </div>
+      <div class="container-fluid citySubmenu">
+        <h2>Visit {{ cityName }}</h2>
+      </div>
+      <div class="cityMainContent">
+        <div class="cityTopPlacesContainer">
+          <!-- 1 -->
+          <div class="col col-lg-5 col-12 cityTopPlacesBox">
+            <div class="container boxContainer">
+              <h2>{{ cityName }}'s top Restaurants and Bars!</h2>
+              <hr />
+              <h4>
+                Experience modern local dishes and breathtaking views at our
+                favourite restaurant, {{ cityName }}'s best restaurant, where
+                the menu is created by executive and professional chefs.
+              </h4>
+              <p>Location: {{ cityName }}</p>
+              <button class="btn seeMoreBtn">See More</button>
+            </div>
+          </div>
+          <div class="col col-lg-5 col-12 cityTopPlacesBox">
+            <div class="container boxContainerImg">
+              <img
+                :src="require('../../../assets/blogPhotos/gastronomy1.jpg')"
+                :alt="currentCity.id"
+                :onerror="replaceByDefault"
+                class="topPlacesImg"
+              />
+            </div>
           </div>
         </div>
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainerImg">
-            <img
-              :src="require('../../../assets/blogPhotos/gastronomy1.jpg')"
-              :alt="this.currentCity.id"
-              :onerror="replaceByDefault"
-              class="topPlacesImg"
-            />
-          </div>
-        </div>
-        <!-- 2 -->
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainerImg">
-            <img
-              :src="require('../../../assets/blogPhotos/gastronomy2.jpg')"
-              :alt="this.currentCity.id"
-              :onerror="replaceByDefault"
-              class="topPlacesImg"
-            />
-          </div>
-        </div>
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainer">
-            <h2>The Pines</h2>
-            <hr />
-            <h4>
-              The Pines private lounge and bar, operating only on request for
-              private use, is an outstanding space centered around two
-              distinctive fireplaces.
-            </h4>
-            <p>Location: {{ id }}</p>
-            <button class="btn seeMoreBtn">See More</button>
-          </div>
-        </div>
-        <!-- 3 -->
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainer">
-            <h2>The Lobby</h2>
-            <hr />
-            <h4>
-              Light meals, snacks and beverages are served throughout the day in
-              this inviting space.
-            </h4>
-            <p>Location: {{ id }}</p>
-            <button class="btn seeMoreBtn">See More</button>
-          </div>
-        </div>
-        <div class="col col-lg-5 col-12 cityTopPlacesBox">
-          <div class="container boxContainerImg">
-            <img
-              :src="require('../../../assets/blogPhotos/gastronomy3.jpg')"
-              :alt="this.currentCity.id"
-              :onerror="replaceByDefault"
-              class="topPlacesImg"
-            />
+        <div v-for="gastronomy in gastronomies" :key="gastronomy._id">
+          <div class="cityTopPlacesContainer">
+            <!-- 1 -->
+            <div class="col col-lg-5 col-12 cityTopPlacesBox">
+              <div class="container boxContainer">
+                <h2>{{ gastronomy.name }}</h2>
+                <hr />
+                <h4>{{ gastronomy.description }}</h4>
+                <p>Location: {{ cityName }}</p>
+                <button class="btn seeMoreBtn">See More</button>
+              </div>
+            </div>
+            <div class="col col-lg-5 col-12 cityTopPlacesBox">
+              <div class="container boxContainerImg">
+                <img
+                  :src="require('../../../assets/blogPhotos/gastronomy2.jpg')"
+                  :alt="currentCity.id"
+                  :onerror="replaceByDefault"
+                  class="topPlacesImg"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="">
-      <TreeLogo />
-    </div>
-    <div class="descriptionContainer">
-      <h2>
-        “Cities, like dreams, are made of desires and fears, even if the thread
-        of their discourse is secret, their rules are absurd, their perspectives
-        deceitful, and everything conceals something else.”
-      </h2>
-      <h5>― Italo Calvino, Invisible Cities</h5>
+      <div class="">
+        <TreeLogo />
+      </div>
+      <div class="descriptionContainer">
+        <h2>
+          “Cities, like dreams, are made of desires and fears, even if the
+          thread of their discourse is secret, their rules are absurd, their
+          perspectives deceitful, and everything conceals something else.”
+        </h2>
+        <h5>― Italo Calvino, Invisible Cities</h5>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import TreeLogo from "../../../assets/Icons/tree.svg";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   name: "CityGastronomy",
   components: {
     TreeLogo,
+    Loading,
   },
   data() {
     return {
       imgError: false,
       id: null,
-      currentCity: {},
+      cityName: null,
     };
   },
   created() {
     this.id = this.$route.params.id;
-    this.currentCity = this.$store.state.cities.find(
-      (city) => city.name == this.id
-    );
+    this.fetchGastronomies();
+    this.cityName = this.$store.state.cities.city.name;
   },
-  computed: {},
+  computed: {
+    loading() {
+      return this.$store.state.cities.loading;
+    },
+    currentCity() {
+      return this.$store.state.cities.city;
+    },
+    gastronomies() {
+      return this.$store.state.cities.gastronomies;
+    },
+  },
   methods: {
     replaceByDefault(e) {
       e.target.src = this.defaultImg;
+    },
+    fetchGastronomies() {
+      this.$store.dispatch("getGastronomies", this.id);
     },
   },
 };

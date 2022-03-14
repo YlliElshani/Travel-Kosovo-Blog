@@ -1,9 +1,9 @@
 <template>
 	<body>
 		<div class="container">
-			<router-link :to="{ name: 'CreatePost' }">
-				<b-button variant="primary">Add Post</b-button>
-			</router-link>
+      <button>
+        <b-button variant="primary"><router-link :to="{ name: 'CreateCity' }">Add a post</router-link></b-button>
+      </button>
 			<div class="row">
 				<Card v-for="entry in postList" :key="entry._id" :post="entry" />
 			</div>
@@ -56,6 +56,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.dark button{
+  background-color: #3a3a3a; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+
 .blog-cards {
 	position: relative;
 

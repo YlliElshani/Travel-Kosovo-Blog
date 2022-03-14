@@ -1,66 +1,81 @@
 <template>
-  <body class="createPost">
-    <form action="" @submit.prevent="addCity">
+  <div class="createPost">
+    <v-btn class="primary-btn" tile @click="onGastronomy">
+      <v-icon left>
+        mdi-plus
+      </v-icon>
+      Create Gastronomy
+    </v-btn>
+    <form action="" @submit.prevent="editCity">
       <div class="container">
         <input
           required
           type="text"
           placeholder="Enter city name"
-          v-model="city.name"
+          v-model="name"
         />
-        <textarea v-model="city.description" />
+        <textarea v-model="description" />
         <input
           required
           type="number"
           placeholder="Enter city rating"
-          v-model="city.rating"
+          v-model="rating"
         />
-        <button type="submit">Continue</button>
+        <button type="submit">Save Changes</button>
       </div>
     </form>
-  </body>
+  </div>
 </template>
 
 <script>
 import "firebase/auth";
-// import db from "../../../firebase/firebaseInit";
-import createCity from "../../../utility/City/createCity";
 
 export default {
   data() {
     return {
-      city: {
-        description: "",
-        imgPath: "",
-        name: "",
-        rating: null,
-      },
+      id: null,
+      description: "",
+      name: "",
+      rating: null,
     };
   },
+  created() {
+    this.id = this.$route.params.id;
+    this.getCity();
+    this.description = this.currentCity.description;
+    this.name = this.currentCity.name;
+    this.rating = this.currentCity.rating;
+  },
+  computed: {
+    currentCity() {
+      return this.$store.state.cities.city;
+    },
+  },
   methods: {
-    async addCity() {
-      try {
-        const newCity = await createCity({
-          ...this.city,
+    getCity() {
+      this.$store.dispatch("getCity", this.id);
+    },
+    onGastronomy() {
+      this.$router.push({ name: "CityGastronomyForm", id: this.id });
+    },
+    editCity() {
+      const updatedCity = {
+        description: this.description,
+        name: this.name,
+        rating: this.rating,
+      };
+      this.$store
+        .dispatch("editCity", { city: updatedCity, id: this.id })
+        .then(() => {
+          this.$store.dispatch("getCity", this.id);
+          this.$router.push({ name: "Cities" });
         });
-        this.$router.push({
-          name: "ViewCity",
-          params: { id: newCity._id },
-        });
-      } catch (err) {
-        console.log(`Errori te AddCity ${err}`);
-      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
-.dark body{
-  background-color: #303030 !important;
-}
-
 @media (max-width: 900px) {
   .createPost {
     justify-content: center !important;
