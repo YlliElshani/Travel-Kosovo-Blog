@@ -92,6 +92,22 @@ export default {
           });
       });
     },
+    editCity({ commit }, payload) {
+      commit("SET_LOADING", true);
+      return new Promise((resolve, reject) => {
+        api("localhost")
+          .put(`/cities/update/${payload.id}`, payload.city)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            commit("SET_LOADING", false);
+          });
+      });
+    },
     setCities({ commit }, city) {
       commit("SET_LOADING", true);
       return new Promise((resolve, reject) => {

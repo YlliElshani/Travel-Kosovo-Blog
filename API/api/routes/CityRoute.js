@@ -11,7 +11,7 @@ CityRoute.get("/:id", CityController.get);
 //Create City
 CityRoute.post("/create", CityController.post);
 //Update City
-CityRoute.put("/update/:name", CityController.put);
+CityRoute.put("/update/:id", CityController.put);
 //Delete City
 CityRoute.delete("/delete/:name", CityController.delete);
 

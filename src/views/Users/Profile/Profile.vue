@@ -61,9 +61,6 @@ export default {
     closeModal() {
       this.modalActive = !this.modalActive;
     },
-    isAdmin() {
-      return this.$store.state.users.isAdmin;
-    },
     updateProfile() {
       const updatedUser = {
         profileId: this.currentUser.profileId,
@@ -78,6 +75,9 @@ export default {
     },
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     currentUser() {
       return this.$store.state.users.currentUser;
     },

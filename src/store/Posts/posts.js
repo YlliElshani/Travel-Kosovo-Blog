@@ -28,7 +28,6 @@ export default {
 		},
 		SET_CURRENT_POST(state, payload) {
 			state.post = payload;
-			console.log(state.post);
 		},
 		SET_LIST(state, list) {
 			state.posts = list;
@@ -74,7 +73,6 @@ export default {
 						reject(error);
 					})
 					.finally(() => {
-						console.log(this.state.currentPost);
 						commit("SET_LOADING", false);
 					});
 			});
@@ -119,7 +117,6 @@ export default {
 				api("localhost")
 					.put(`/posts/update/${post._id}`)
 					.then((response) => {
-						console.log(response);
 						commit("EDIT_POST", response.data);
 						resolve(response);
 					})

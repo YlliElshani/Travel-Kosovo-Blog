@@ -20,6 +20,13 @@
           <button
             type="button"
             class="btnDel"
+            @click.prevent="editCity(city._id)"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btnDel"
             @click.prevent="removeCity(city.name)"
           >
             Delete
@@ -48,6 +55,9 @@ export default {
   methods: {
     removeCity(cityName) {
       this.$store.dispatch("removeCity", cityName);
+    },
+    editCity(cityId) {
+      this.$router.push({ name: "EditCity", params: { id: cityId } });
     },
   },
 };

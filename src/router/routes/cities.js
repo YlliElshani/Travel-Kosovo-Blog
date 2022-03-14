@@ -10,6 +10,11 @@ export default [
     component: () => import("../../views/Cities/Create/AddCity.vue"),
   },
   {
+    path: "/cities/edit/:id",
+    name: "EditCity",
+    component: () => import("../../views/Cities/components/Form.vue"),
+  },
+  {
     path: "/view/:id",
     name: "ViewCity",
     component: () => import("../../views/Cities/ViewCity.vue"),

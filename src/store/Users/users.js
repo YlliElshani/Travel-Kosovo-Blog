@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../../firebase/firebaseInit";
-//import getAuth from "../../firebase/firebaseInit";
 
 export default {
   state: {
@@ -67,7 +66,6 @@ export default {
     },
 
     async getCurrentUser({ commit }) {
-      console.log('getting cr user')
       commit("SET_LOADING", true);
       const dataBase = await db
         .collection("users")
@@ -77,16 +75,28 @@ export default {
       commit("SET_LOGGED_IN", true);
       commit("SET_ADMIN", dbResults.data().roles);
       commit("SET_LOADING", false);
-      // commit("setProfileInitials");
-      // const token = await user.getIdTokenResult();
-      // const admin = await token.claims.admin;
-      // commit("setProfileAdmin", admin);
     },
-
+    async makeAdmin({ commit }, id) {
+      commit("SET_LOADING", true);
+      const dataBase = await db.collection("users").doc(id);
+      await dataBase.update({
+        roles: [0, 1],
+        updatedDate: new Date(),
+      });
+      commit("SET_LOADING", false);
+    },
+    async removeAdmin({ commit }, id) {
+      commit("SET_LOADING", true);
+      const dataBase = await db.collection("users").doc(id);
+      await dataBase.update({
+        roles: [0],
+        updatedDate: new Date(),
+      });
+      commit("SET_LOADING", false);
+    },
     async getAllUsers({ commit }) {
       commit("SET_LOADING", true);
-      const dataBase = await db
-        .collection("users")
+      const dataBase = await db.collection("users");
       const dbResults = await dataBase.get();
       commit("SET_PROFILE_INFO", dbResults);
       commit("SET_LOGGED_IN", true);
@@ -96,13 +106,13 @@ export default {
     async updateUserInfo({ commit, state }, updatedUser) {
       commit("SET_LOADING", true);
       const dataBase = await db.collection("users").doc(updatedUser.profileId);
-      console.log(dataBase)
       await dataBase.update({
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
         username: updatedUser.username,
+        updatedDate: new Date(),
       });
-      state.getCurrentUser
+      state.getCurrentUser;
       commit("SET_LOADING", false);
     },
     signUserOut({ commit }) {
@@ -116,7 +126,6 @@ export default {
       state.currentUser.profileFirstName = doc.data().firstName;
       state.currentUser.profileLastName = doc.data().lastName;
       state.currentUser.profileUserName = doc.data().username;
-      console.log(state.currentUser);
     },
   },
 };
