@@ -75,7 +75,12 @@
         </div>
         <div
           class="col col-lg-4 col-12 cityOptions places"
-          @click="$router.push({ name: 'CityPlaces' })"
+          @click="
+            $router.push({
+              name: 'CityGastronomy',
+              params: { id: currentCity._id },
+            })
+          "
         >
           <h1>Places</h1>
         </div>

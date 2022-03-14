@@ -1,27 +1,11 @@
 <template>
   <div class="createPost">
-    <v-btn class="primary-btn" tile @click="onGastronomy">
-      <v-icon left>
-        mdi-plus
-      </v-icon>
-      Create Gastronomy
-    </v-btn>
-    <form action="" @submit.prevent="editCity">
+    <form action="" @submit.prevent="addGastronomy">
       <div class="container">
-        <input
-          required
-          type="text"
-          placeholder="Enter city name"
-          v-model="name"
-        />
-        <textarea v-model="description" />
-        <input
-          required
-          type="number"
-          placeholder="Enter city rating"
-          v-model="rating"
-        />
-        <button type="submit">Save Changes</button>
+        <input required type="text" placeholder="Name" v-model="name" />
+        <textarea placeholder="Description..." v-model="description" />
+        <input required placeholder="Location" v-model="location" />
+        <button type="submit">Submit</button>
       </div>
     </form>
   </div>
@@ -31,41 +15,27 @@
 import "firebase/auth";
 
 export default {
+  name: "CityGastronomyForm",
   data() {
     return {
-      id: null,
-      description: "",
       name: "",
-      rating: null,
+      description: "",
+      location: "",
+      id: null,
     };
   },
   created() {
     this.id = this.$route.params.id;
-    this.getCity();
-    this.description = this.currentCity.description;
-    this.name = this.currentCity.name;
-    this.rating = this.currentCity.rating;
-  },
-  computed: {
-    currentCity() {
-      return this.$store.state.cities.city;
-    },
   },
   methods: {
-    getCity() {
-      this.$store.dispatch("getCity", this.id);
-    },
-    onGastronomy() {
-      this.$router.push({ name: "CityGastronomyForm", id: this.id });
-    },
-    editCity() {
-      const updatedCity = {
-        description: this.description,
+    addGastronomy() {
+      const gastronomy = {
         name: this.name,
-        rating: this.rating,
+        description: this.description,
+        location: this.location,
       };
       this.$store
-        .dispatch("editCity", { city: updatedCity, id: this.id })
+        .dispatch("addGastronomy", { gastronomy: gastronomy, id: this.id })
         .then(() => {
           this.$store.dispatch("getCity", this.id);
           this.$router.push({ name: "Cities" });

@@ -42,9 +42,14 @@ export default [
     component: () => import("../../views/Cities/Details/City.vue"),
   },
   {
-    path: "/cities/:name/Gastronomy",
+    path: "/cities/:id/gastronomy",
     name: "CityGastronomy",
     component: () => import("../../views/Cities/Details/Gastronomy.vue"),
+  },
+  {
+    path: "/cities/:id/create/gastronomy",
+    name: "CityGastronomyForm",
+    component: () => import("../../views/Cities/components/AddGastronomy.vue"),
   },
   {
     path: "/cities/:id/Experiences",
