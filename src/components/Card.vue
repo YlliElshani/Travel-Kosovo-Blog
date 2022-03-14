@@ -9,7 +9,8 @@
         <p>
           {{ post.blogHTML }}
         </p>
-        <div class="btns">
+        <h6><b>Created At: </b> {{ post.insertedDate ? post.insertedDate : '--' }}</h6>
+        <div class="btns" v-if="isAdmin">
           <router-link
             class="link"
             :to="{ name: 'View', params: { id: post._id } }"
@@ -26,12 +27,14 @@
 </template>
 
 <script>
-// import deletePost from "../utility/Posts/deletePost";
 export default {
   props: {
     post: Object,
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     src() {
       const filename = this.post.files?.split(";")[0];
 
@@ -44,8 +47,8 @@ export default {
   methods: {
     removePost(postId) {
       this.$store.dispatch("removePost", postId).then(() => {
-		  window.location.reload()
-	  });
+        window.location.reload();
+      });
     },
   },
 };

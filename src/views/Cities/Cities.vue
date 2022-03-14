@@ -1,8 +1,10 @@
 <template>
   <body>
     <div class="container">
-      <button v-if="isAdmin" >
-       <b-button variant="primary"> <router-link class="btnLink" :to="{ name: 'CreateCity' }">Add a city</router-link></b-button>
+      <button v-if="isAdmin">
+        <b-button variant="primary">
+          <router-link class="btnLink" :to="{ name: 'CreateCity' }">Add a city</router-link>
+        </b-button>
       </button>
       <div class="row">
         <CardCity v-for="entry in cityList" :key="entry._id" :city="entry" />
@@ -60,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dark button{
-  background-color: #3a3a3a; 
+.dark button {
+  background-color: #3a3a3a;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -71,12 +73,11 @@ export default {
   font-size: 16px;
 }
 
-    .btnLink {
-      padding: 15px;
-      text-decoration: none;
-      color: black;
-    }
-
+.btnLink {
+  padding: 15px;
+  text-decoration: none;
+  color: black;
+}
 
 .cardsWrapper {
   display: flex;

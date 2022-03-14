@@ -5,6 +5,8 @@ const schema = mongoose.Schema({
 	imgPath: String,
 	blogHTML: String,
 	files: String,
+	insertedDate: Date,
+	updatedDate: Date,
 });
 
 const model = mongoose.model("Posts", schema);

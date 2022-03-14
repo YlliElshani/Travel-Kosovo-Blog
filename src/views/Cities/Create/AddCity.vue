@@ -1,6 +1,6 @@
 <template>
   <body class="createPost">
-    <form action="" @submit.prevent="addCity">
+    <form action="" @submit.prevent="createCity">
       <div class="container">
         <input
           required
@@ -15,7 +15,7 @@
           placeholder="Enter city rating"
           v-model="city.rating"
         />
-        <button type="submit">Continue</button>
+        <button type="submit">Submit</button>
       </div>
     </form>
   </body>
@@ -23,7 +23,6 @@
 
 <script>
 import "firebase/auth";
-// import db from "../../../firebase/firebaseInit";
 import createCity from "../../../utility/City/createCity";
 
 export default {
@@ -34,11 +33,12 @@ export default {
         imgPath: "",
         name: "",
         rating: null,
+        insertedDate: new Date(),
       },
     };
   },
   methods: {
-    async addCity() {
+    async createCity() {
       try {
         const newCity = await createCity({
           ...this.city,
@@ -56,8 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.dark body{
+.dark body {
   background-color: #303030 !important;
 }
 

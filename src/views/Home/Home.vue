@@ -1,43 +1,43 @@
 <template>
-<body>
-<div class="container">
-    <div class="instruction">
-      <p>
-        Zgjedhni qytetin tuaj ne harte dhe shikoni bloget per te!
-      </p>
-    </div>
-    <kosova-map />
-    <div class="AboutUs">
-      <div class="inside">
-        <h2>
-          Shikoni dhe postoni te gjitha bukurite e fshehta te Kosoves!
-        </h2>
+  <body>
+    <div class="container">
+      <div class="instruction">
         <p>
-          liquam dignissim lorem ut libero tempus, ut pretium quam bibendum.
-          Cras dignissim orci ut mi interdum bibendum. In finibus laoreet
-          scelerisque. Proin non risus ut nisi aliquet vehicula iaculis at
-          ipsum. In ut interdum ligula. Vivamus ut leo tincidunt, lobortis sem
-          nec, convallis nunc. Quisque facilisis aliquet augue, sit amet laoreet
-          lorem sagittis sed. Nam vitae eros fermentum,
+          Zgjedhni qytetin tuaj ne harte dhe shikoni bloget per te!
         </p>
-        <div v-if="!user">
-          <router-link class="router-button" to="#">
-            Register for KosovaBlogs <Arrow class="arrow arrow-light" />
-          </router-link>
-        </div>
-        <div v-else>
-          <router-link class="router-button" to="#">
-            Make a post <Arrow class="arrow arrow-light" />
-          </router-link>
-        </div>
       </div>
-      <img src="../../assets/blogPhotos/stock-1.jpg" alt="" />
-      <div class="img2">
-        <img src="../../assets/blogPhotos/stock-2.jpg" alt="" />
+      <kosova-map />
+      <div class="AboutUs">
+        <div class="inside">
+          <h2>
+            Shikoni dhe postoni te gjitha bukurite e fshehta te Kosoves!
+          </h2>
+          <p>
+            liquam dignissim lorem ut libero tempus, ut pretium quam bibendum.
+            Cras dignissim orci ut mi interdum bibendum. In finibus laoreet
+            scelerisque. Proin non risus ut nisi aliquet vehicula iaculis at
+            ipsum. In ut interdum ligula. Vivamus ut leo tincidunt, lobortis sem
+            nec, convallis nunc. Quisque facilisis aliquet augue, sit amet
+            laoreet lorem sagittis sed. Nam vitae eros fermentum,
+          </p>
+          <div v-if="!user">
+            <router-link class="router-button" to="#">
+              Register for KosovaBlogs <Arrow class="arrow arrow-light" />
+            </router-link>
+          </div>
+          <div v-else>
+            <router-link class="router-button" to="#">
+              Make a post <Arrow class="arrow arrow-light" />
+            </router-link>
+          </div>
+        </div>
+        <img src="../../assets/blogPhotos/stock-1.jpg" alt="" />
+        <div class="img2">
+          <img src="../../assets/blogPhotos/stock-2.jpg" alt="" />
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </template>
 
 <script>
@@ -56,17 +56,15 @@ export default {
       return this.$store.state.user;
     },
 
-  //need to fix this
-    isLoggedIn(){
+    isLoggedIn() {
       return this.$store.state.user.isLoggedIn;
-    }
+    },
   },
-   props: ['mode']
+  props: ["mode"],
 };
 </script>
 
 <style lang="scss" scoped>
-
 .instruction {
   width: 100%;
   padding: 15px;

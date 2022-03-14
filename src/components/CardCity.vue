@@ -10,6 +10,10 @@
       <div class="card">
         <h5 class="card-header">{{ city.name }}</h5>
         <h5 class="card-body">{{ city.description }}</h5>
+        <h6 class="card-footer">
+          <b>Inserted At: </b>
+          {{ city.insertedDate ? city.insertedDate : "--" }}
+        </h6>
         <h5 class="card-footer">{{ city.rating }}</h5>
         <div class="btns">
           <router-link
@@ -20,6 +24,7 @@
           <button
             type="button"
             class="btnDel"
+            v-if="isAdmin"
             @click.prevent="editCity(city._id)"
           >
             Edit
@@ -27,6 +32,7 @@
           <button
             type="button"
             class="btnDel"
+            v-if="isAdmin"
             @click.prevent="removeCity(city.name)"
           >
             Delete
@@ -43,6 +49,9 @@ export default {
     city: Object,
   },
   computed: {
+    isAdmin() {
+      return this.$store.state.users.isAdmin;
+    },
     src() {
       const filename = this.city.files?.split(";")[0];
 

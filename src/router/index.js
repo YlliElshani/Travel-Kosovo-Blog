@@ -1,7 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "../store";
-// import { onAuthStateChanged, getAuth } from "firebase/auth";
 
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
@@ -46,12 +44,5 @@ const router = new VueRouter({
     },
   ],
 });
-
-// const isAuthenticated = store.state.users.loggedIn;
-
-// router.beforeEach((to, from, next) => {
-//   if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
-//   else next()
-// });
 
 export default router;

@@ -2,7 +2,6 @@ import CityModel from "../models/CityModel";
 import GastronomyModel from "../models/GastronomyModel";
 import ExperienceModel from "../models/ExperienceModel";
 import PlaceModel from "../models/PlaceModel";
-// import updateCitySchema from "../validator/CityValidator/updateCitySchema";
 import FileServiceCity from "../services/FileServiceCity";
 
 export default {

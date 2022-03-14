@@ -71,8 +71,8 @@ export default {
 </script>
 
 <style scoped>
-.dark div{
-  background-color:#303030;
+.dark div {
+  background-color: #303030;
 }
 
 .container {
@@ -80,7 +80,6 @@ export default {
   height: 70%;
   margin: auto;
   overflow: hidden;
-
 }
 .offer-image {
   height: 300px;

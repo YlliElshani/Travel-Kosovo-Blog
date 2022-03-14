@@ -3,119 +3,106 @@ import updatePostSchema from "../validator/PostValidator/updatePostSchema";
 import FileService from "../services/FileService";
 
 export default {
-	list: async (req, res) => {
-		const list = await PostModel.find();
+  list: async (req, res) => {
+    const list = await PostModel.find();
 
-		// console.log('testing list method')
-		return res.json(list);
-	},
-	get: async (req, res) => {
-		const id = req.params.id;
+    return res.json(list);
+  },
+  get: async (req, res) => {
+    const id = req.params.id;
 
-		const foundItem = await PostModel.findOne({ _id: id });
-		return res.json(foundItem);
-	},
-	post: async (req, res) => {
-		const post = req.body;
+    const foundItem = await PostModel.findOne({ _id: id });
+    return res.json(foundItem);
+  },
+  post: async (req, res) => {
+    const post = req.body;
 
-		// const validationResult = updatePostSchema.validate(post);
+    const addpost = await new PostModel(post);
 
-		// if (validationResult.error) {
-		//     return res.status(401).json({
-		//         message: "Validation failed while updating",
-		//         error: validationResult.error,
-		//     });
-		// }
+    addpost.save();
 
-		const addpost = await new PostModel(post);
+    return res.json(addpost);
+  },
+  delete: async (req, res) => {
+    const { id } = req.params;
 
-		addpost.save();
+    try {
+      await PostModel.deleteOne({
+        _id: id,
+      });
+      return res.json({ deleted: true });
+    } catch (err) {
+      console.log(`Errori1 ${err}`);
+    }
+  },
+  put: async (req, res) => {
+    const post = req.body;
 
-		return res.json(addpost);
-	},
-	delete: async (req, res) => {
-		const { id } = req.params;
+    const validationResult = updatePostSchema.validate(post);
 
-		try {
-			await PostModel.deleteOne({
-				_id: id,
-				// userId: req.authId
-			});
-			return res.json({ deleted: true });
-		} catch (err) {
-			console.log(`Errori1 ${err}`);
-		}
-	},
-	put: async (req, res) => {
-		const post = req.body;
+    if (validationResult.error) {
+      return res.status(401).json({
+        message: "Validation failed while updating",
+        error: validationResult.error,
+      });
+    }
+    const updatePost = await PostModel.updateOne({ _id: post._id }, post);
 
-		const validationResult = updatePostSchema.validate(post);
+    return res.json(updatePost);
+  },
+  deleteFile: async (req, res) => {
+    const { realEstateId, filename } = req.params;
 
-		if (validationResult.error) {
-			return res.status(401).json({
-				message: "Validation failed while updating",
-				error: validationResult.error,
-			});
-		}
-		const updatePost = await PostModel.updateOne({ _id: post._id }, post);
+    FileService.deleteFiles([filename]);
 
-		return res.json(updatePost);
-	},
-	deleteFile: async (req, res) => {
-		const { realEstateId, filename } = req.params;
+    const realEstateData = await PostModel.findOne(
+      { _id: realEstateId },
+      { files: 1 }
+    );
 
-		FileService.deleteFiles([filename]);
+    const updatedFilenames = realEstateData.files
+      .replace(`${filename};`, "")
+      .replace(filename, "");
 
-		const realEstateData = await PostModel.findOne(
-			{ _id: realEstateId },
-			{ files: 1 }
-		);
+    await PostModel.updateOne(
+      { _id: realEstateId },
+      {
+        files: updatedFilenames,
+      }
+    );
 
-		const updatedFilenames = realEstateData.files
-			.replace(`${filename};`, "")
-			.replace(filename, "");
+    const updatedRealEstate = await PostModel.findOne(
+      { _id: realEstateId },
+      {
+        files: updatedFilenames,
+      }
+    );
 
-		await PostModel.updateOne(
-			{ _id: realEstateId },
-			{
-				files: updatedFilenames,
-			}
-		);
+    return res.json(updatedRealEstate);
+  },
+  uploadFile: async (req, res) => {
+    const { id } = req.params;
 
-		const updatedRealEstate = await PostModel.findOne(
-			{ _id: realEstateId },
-			{
-				files: updatedFilenames,
-			}
-		);
+    const receivedFiles = [req.files.file];
 
-		return res.json(updatedRealEstate);
-	},
-	uploadFile: async (req, res) => {
-		const { id } = req.params;
+    try {
+      const files = await FileService.uploadFiles(receivedFiles);
 
-		const receivedFiles = [req.files.file];
+      const realEstate = await PostModel.find({ _id: id }, { files: 1 });
+      const oldFiles = realEstate.files;
 
-		try {
-			const files = await FileService.uploadFiles(receivedFiles);
+      const newFiles = `${oldFiles || ""}${oldFiles ? ";" : ""}${files}`;
 
-			console.log("files - ", files);
+      await PostModel.updateOne({ _id: id }, [
+        {
+          $set: { files: newFiles },
+        },
+      ]);
 
-			const realEstate = await PostModel.find({ _id: id }, { files: 1 });
-			const oldFiles = realEstate.files;
-
-			const newFiles = `${oldFiles || ""}${oldFiles ? ";" : ""}${files}`;
-
-			await PostModel.updateOne({ _id: id }, [
-				{
-					$set: { files: newFiles },
-				},
-			]);
-
-			const updatedRealEstate = await PostModel.find({ _id: id });
-			return res.json(updatedRealEstate);
-		} catch (err) {
-			res.status(500).json({ err: err.toString() });
-		}
-	},
+      const updatedRealEstate = await PostModel.find({ _id: id });
+      return res.json(updatedRealEstate);
+    } catch (err) {
+      res.status(500).json({ err: err.toString() });
+    }
+  },
 };
