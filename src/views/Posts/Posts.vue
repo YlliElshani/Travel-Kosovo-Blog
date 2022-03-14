@@ -2,7 +2,7 @@
 	<body>
 		<div class="container">
       <button>
-        <b-button variant="primary"><router-link :to="{ name: 'CreateCity' }">Add a post</router-link></b-button>
+        <b-button variant="primary"><router-link class="btnLink" :to="{ name: 'CreatePost' }">Add a post</router-link></b-button>
       </button>
 			<div class="row">
 				<Card v-for="entry in postList" :key="entry._id" :post="entry" />
@@ -67,6 +67,12 @@ export default {
   display: inline-block;
   font-size: 16px;
 }
+
+   .btnLink {
+      padding: 15px;
+      text-decoration: none;
+      color: black;
+    }
 
 
 .blog-cards {

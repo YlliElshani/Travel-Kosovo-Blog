@@ -2,7 +2,7 @@
   <body>
     <div class="container">
       <button v-if="isAdmin" >
-        <b-button variant="primary"><router-link :to="{ name: 'CreateCity' }">Add a city</router-link></b-button>
+       <b-button variant="primary"> <router-link class="btnLink" :to="{ name: 'CreateCity' }">Add a city</router-link></b-button>
       </button>
       <div class="row">
         <CardCity v-for="entry in cityList" :key="entry._id" :city="entry" />
@@ -70,6 +70,13 @@ export default {
   display: inline-block;
   font-size: 16px;
 }
+
+    .btnLink {
+      padding: 15px;
+      text-decoration: none;
+      color: black;
+    }
+
 
 .cardsWrapper {
   display: flex;

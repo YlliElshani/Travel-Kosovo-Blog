@@ -114,9 +114,6 @@ export default {
   background-color: #303030;
 }
 
-.dark template{
-  background-color: #303030;
-}
 
 .dark p{
   color: white !important;
