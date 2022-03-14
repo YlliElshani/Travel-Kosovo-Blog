@@ -1,37 +1,16 @@
 <template>
-	<div class="createPost">
-		<div class="d-flex justify-content-center">
-			<v-btn class="primary-btn" tile @click="onGastronomy">
-				<v-icon left>
-					mdi-plus
-				</v-icon>
-				Create Gastronomy
-			</v-btn>
-			<v-btn class="primary-btn" tile @click="onPlace">
-				<v-icon left>
-					mdi-plus
-				</v-icon>
-				Create Place
-			</v-btn>
+	<div class="container">
+		<h1 class="mt-2">Add Place</h1>
+		<div class="createPost">
+			<form action="" @submit.prevent="addPlace">
+				<div class="container">
+					<input required type="text" placeholder="Name" v-model="name" />
+					<textarea placeholder="Description..." v-model="description" />
+					<input required placeholder="Location" v-model="location" />
+					<button type="submit">Submit</button>
+				</div>
+			</form>
 		</div>
-		<form action="" @submit.prevent="editCity">
-			<div class="container">
-				<input
-					required
-					type="text"
-					placeholder="Enter city name"
-					v-model="name"
-				/>
-				<textarea v-model="description" />
-				<input
-					required
-					type="number"
-					placeholder="Enter city rating"
-					v-model="rating"
-				/>
-				<button type="submit">Save Changes</button>
-			</div>
-		</form>
 	</div>
 </template>
 
@@ -39,44 +18,27 @@
 import "firebase/auth";
 
 export default {
+	name: "CityPlacesForm",
 	data() {
 		return {
-			id: null,
-			description: "",
 			name: "",
-			rating: null,
+			description: "",
+			location: "",
+			id: null,
 		};
 	},
 	created() {
 		this.id = this.$route.params.id;
-		this.getCity();
-		this.description = this.currentCity.description;
-		this.name = this.currentCity.name;
-		this.rating = this.currentCity.rating;
-	},
-	computed: {
-		currentCity() {
-			return this.$store.state.cities.city;
-		},
 	},
 	methods: {
-		getCity() {
-			this.$store.dispatch("getCity", this.id);
-		},
-		onGastronomy() {
-			this.$router.push({ name: "CityGastronomyForm", id: this.id });
-		},
-		onPlace() {
-			this.$router.push({ name: "CityPlaceForm", id: this.id });
-		},
-		editCity() {
-			const updatedCity = {
-				description: this.description,
+		addPlace() {
+			const place = {
 				name: this.name,
-				rating: this.rating,
+				description: this.description,
+				location: this.location,
 			};
 			this.$store
-				.dispatch("editCity", { city: updatedCity, id: this.id })
+				.dispatch("addPlace", { place: place, id: this.id })
 				.then(() => {
 					this.$store.dispatch("getCity", this.id);
 					this.$router.push({ name: "Cities" });

@@ -24,8 +24,8 @@ CityRoute.get("/:id/experience", CityController.getCitiesExperience);
 CityRoute.post("/:id/experience", CityController.AddCityExperience);
 
 //Places
-CityRoute.get("/:id/place", CityController.getCitiesPlace);
-CityRoute.post("/:id/place", CityController.AddCityPlace);
+CityRoute.get("/:id/places", CityController.getCitiesPlace);
+CityRoute.post("/:id/places", CityController.AddCityPlace);
 
 //DropZone
 CityRoute.put("/:id/uploadFile", CityController.uploadFile);
